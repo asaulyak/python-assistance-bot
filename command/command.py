@@ -1,3 +1,7 @@
+from address_book import AddressBook
+from typing import List
+
+
 class Command:
     def __init__(self):
         pass
@@ -13,5 +17,5 @@ class Command:
         return []
 
 
-    def run(self, *args):
+    def run(self, args, book: AddressBook, commands: List):
         pass
