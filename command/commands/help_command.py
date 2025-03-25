@@ -10,7 +10,7 @@ class HelpCommand(Command):
     def aliases(self):
         return ['?']
 
-    def run(self, args, book, commands):
+    def run(self, _, __, commands):
         print('Available commands:')
 
         for command in commands:

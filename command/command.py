@@ -1,5 +1,5 @@
-from address_book import AddressBook
 from typing import List
+from execution_context import ExecutionContext
 
 
 class Command:
@@ -22,5 +22,5 @@ class Command:
         return 'default description'
 
 
-    def run(self, args, book: AddressBook, commands: List):
+    def run(self, args, context: ExecutionContext, commands: List) -> [str, bool]:
         pass

@@ -1,4 +1,4 @@
-from address_book.persistence import load_data
+from persistence import load_data
 from command.command_runner import CommandRunner
 
 
@@ -13,7 +13,7 @@ def parse_command(user_input):
 
 
 def main():
-    book = load_data()
+    context = load_data()
 
     print("Welcome to the assistant bot!")
 
@@ -41,7 +41,7 @@ def main():
 
 
         commands_set = list(set(command_parser.commands.values()))
-        message, stop = command.run(args, book, commands_set)
+        message, stop = command.run(args, context, commands_set)
 
         print(message)
 
