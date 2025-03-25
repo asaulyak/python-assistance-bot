@@ -32,7 +32,7 @@ def main():
                 # this will return command because a match was found
                 command = command_parser.find_command(match)
 
-                user_input = input(f"Did you mean {match} {" ".join(args)}? y/n")
+                user_input = input(f"Did you mean {match}{" ".join(args)}? y/n ")
                 if user_input != 'y':
                     continue
             else:
