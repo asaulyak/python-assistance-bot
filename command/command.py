@@ -17,5 +17,10 @@ class Command:
         return []
 
 
+    @property
+    def description(self):
+        return 'default description'
+
+
     def run(self, args, book: AddressBook, commands: List):
         pass
