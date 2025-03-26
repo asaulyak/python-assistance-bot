@@ -1,4 +1,4 @@
-from address_book.persistence import load_data
+from persistence import load_data
 from command.command_runner import CommandRunner
 from display import text_fancy,autocomplete
 
@@ -16,8 +16,7 @@ def parse_command(user_input):
 
 
 def main():
-    
-    book = load_data()
+    context = load_data()
 
     # print("Welcome to the assistant bot!")
     text_fancy("Welcome to the assistant bot !")
@@ -38,7 +37,7 @@ def main():
                 # this will return command because a match was found
                 command = command_parser.find_command(match)
 
-                user_input = input(f"Did you mean {match} {" ".join(args)}? y/n")
+                user_input = input(f"Did you mean {match}{" ".join(args)}? y/n ")
                 if user_input != 'y':
                     continue
             else:
@@ -47,7 +46,7 @@ def main():
 
 
         commands_set = list(set(command_parser.commands.values()))
-        message, stop = command.run(args, book, commands_set)
+        message, stop = command.run(args, context, commands_set)
 
         print(message)
 

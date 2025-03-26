@@ -16,6 +16,11 @@ class HelloCommand(Command):
         return 'Greet the user'
 
 
+    @property
+    def description(self):
+        return 'Say hello to the user'
+
+
     def run(self, *args):
         message = "How can I help you?"
         stop = False

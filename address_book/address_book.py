@@ -1,19 +1,20 @@
 from collections import UserDict
 from datetime import datetime, timedelta
+
 from .record import Record
 
 
 class AddressBook(UserDict):
-    def add_record(self, record):
+    def add_record(self, record: Record):
         self.data[record.name.value] = record
 
 
     def find(self, name, default = None) -> Record:
-        return self.data.get(name, default)
+        return self.data.get(name.value, default)
 
 
     def delete(self, name):
-        del self.data[name]
+        del self.data[name.value]
 
     def get_upcoming_birthdays(self):
         today = datetime.today().date()

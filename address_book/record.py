@@ -1,16 +1,18 @@
 from .birthday import Birthday
+from .email import Email
 from .name import Name
 from .phone import Phone
 
 
 class Record:
-    def __init__(self, name):
-        self.name = Name(name)
-        self.phones = set()
-        self.birthday = None
+    def __init__(self, name: Name):
+        self.name: Name = name
+        self.phones: set[Phone] = set()
+        self.birthday: Birthday | None = None
+        self.emails: set[Email] = set()
 
-    def add_phone(self, phone):
-        self.phones.add(Phone(phone))
+    def add_phone(self, phone: Phone):
+        self.phones.add(phone)
 
     def edit_phone(self, phone_number, new_phone):
         new_phone_exists = bool(self.find_phone(new_phone))
@@ -36,9 +38,12 @@ class Record:
             if p.value == phone_number:
                 self.phones.remove(p)
 
-    def add_birthday(self, birthday):
-        self.birthday = Birthday(birthday)
+    def add_birthday(self, birthday: Birthday):
+        self.birthday = birthday
+
+    def add_email(self, email: Email):
+        self.emails.add(email)
 
 
     def __str__(self):
-        return f"Contact name: {self.name.value}{f': {str(self.birthday)},' if self.birthday else ',' } phones: {'; '.join(p.value for p in self.phones)}"
+        return f"Contact name: {self.name.value}{f': {str(self.birthday)},' if self.birthday else ',' } emails: {'; '.join(email.value for email in self.emails)}, phones: {'; '.join(p.value for p in self.phones)}"
