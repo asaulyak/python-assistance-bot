@@ -8,17 +8,6 @@ from command.command import Command
 from execution_context import ExecutionContext
 
 
-def input_error(func):
-    def inner(*args, **kwargs):
-        try:
-            return func(*args, **kwargs)
-        except ValueError as e:
-            message = f'Failed to add contact: {e}'
-
-            return message, False
-
-    return inner
-
 class AddCommand(Command):
     @property
     def name(self):
