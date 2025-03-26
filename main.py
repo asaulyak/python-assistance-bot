@@ -1,5 +1,8 @@
 from address_book.persistence import load_data
 from command.command_runner import CommandRunner
+from display import text_fancy,autocomplete
+
+
 
 
 def parse_command(user_input):
@@ -13,9 +16,12 @@ def parse_command(user_input):
 
 
 def main():
+    
     book = load_data()
 
-    print("Welcome to the assistant bot!")
+    # print("Welcome to the assistant bot!")
+    text_fancy("Welcome to the assistant bot !")
+    # autocomplete()
 
     command_parser = CommandRunner()
 

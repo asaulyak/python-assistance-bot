@@ -1,4 +1,5 @@
 from command.command import Command
+from display import TableBuilder
 
 
 class HelpCommand(Command):
@@ -9,11 +10,17 @@ class HelpCommand(Command):
     @property
     def aliases(self):
         return ['?']
+    
+    @property
+    def description(self):
+        return 'Show available commands'
 
-    def run(self, args, book, commands):
-        print('Available commands:')
+    def run(self, args, book, commands):        
+        table_title = 'Available commands'
+        table_headers = ('command', 'description')
+        table_data = [(command.name, command.description) for command in commands]
 
-        for command in commands:
-            print(f'  {command.name}', f'({', '.join(alias for alias in command.aliases)})')
+        TableBuilder(table_title,table_headers,table_data)
+        
 
         return '', False
