@@ -44,6 +44,12 @@ class Record:
     def add_email(self, email: Email):
         self.emails.add(email)
 
+    def find_email(self, email):
+        for e in self.emails:
+            if e.value == email:
+
+                return e
+
 
     def __str__(self):
         return f"Name: {self.name.value}{f': {str(self.birthday)},' if self.birthday else ',' } emails: {'; '.join(email.value for email in self.emails)}, phones: {'; '.join(p.value for p in self.phones)}"
