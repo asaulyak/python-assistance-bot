@@ -27,7 +27,7 @@ class EditCommand(Command):
     def description(self):
         return 'Update a record in the address book'
 
-    def run(self, args: list[str], context: ExecutionContext, commands: List) -> [str, bool]:
+    def run(self, args: list[str], context: ExecutionContext, commands: List) -> (str, bool):
         args_len = len(args)
 
         name = args[0] if args_len >= 1 else None

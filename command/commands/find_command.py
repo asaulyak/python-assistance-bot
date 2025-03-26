@@ -24,7 +24,7 @@ class FindCommand(Command):
     def description(self):
         return 'Find contact by name, phone or email'
 
-    def run(self, args: list[str], context: ExecutionContext, commands: List) -> [str, bool]:
+    def run(self, args: list[str], context: ExecutionContext, commands: List) -> (str, bool):
         name: Name | None = None
         phone: Phone | None = None
         email: Email | None = None

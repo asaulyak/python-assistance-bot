@@ -24,7 +24,7 @@ class AddCommand(Command):
     def description(self):
         return 'Add new record to address book'
 
-    def run(self, args: list[str], context: ExecutionContext, commands: List) -> [str, bool]:
+    def run(self, args: list[str], context: ExecutionContext, commands: List) -> (str, bool):
         args_len = len(args)
 
         # get contact details from args if passed
