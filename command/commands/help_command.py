@@ -8,11 +8,11 @@ class HelpCommand(Command):
 
     @property
     def aliases(self):
-        return ['?']
+        return ['?', 'h']
 
     @property
     def description(self):
-        return 'Shows available commands'
+        return 'Show available commands'
 
     def run(self, _, __, commands):
         print('Available commands:')

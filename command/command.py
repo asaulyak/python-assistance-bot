@@ -3,10 +3,6 @@ from execution_context import ExecutionContext
 
 
 class Command:
-    def __init__(self):
-        pass
-
-
     @property
     def name(self):
         return 'empty'

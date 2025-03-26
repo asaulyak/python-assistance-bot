@@ -16,12 +16,12 @@ class AddCommand(Command):
 
     @property
     def aliases(self):
-        return ['create']
+        return ['a', 'create']
 
 
     @property
     def description(self):
-        return 'Adds new record to address book'
+        return 'Add new record to address book'
 
     def run(self, args: list[str], context: ExecutionContext, commands: List) -> [str, bool]:
         args_len = len(args)
