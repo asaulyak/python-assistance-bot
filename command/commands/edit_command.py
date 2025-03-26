@@ -1,17 +1,16 @@
 from typing import List
 
-from address_book import Name, Field, Phone, AddressBook
+from address_book import Name, Field, Phone
 from address_book.birthday import Birthday
 from address_book.email import Email
 from address_book.empty_field import EmptyField
 from command.command import Command
+from display.paginator import Paginator
 from execution_context import ExecutionContext
 from user_input.user_input import yes_no_question, index_question
 
 
 class EditCommand(Command):
-    def __init__(self):
-        self.__records_cursor = 0
 
     @property
     def name(self):
@@ -40,9 +39,10 @@ class EditCommand(Command):
         if not record:
             print('Pick an existing contact to edit')
 
-            self.__show_available_contacts(context.book, True)
+            paginator = Paginator(list(context.book.values()))
+            paginator.show(True)
 
-            items_to_show_exist = len(context.book) > self.__records_cursor
+            items_to_show_exist = len(context.book) > paginator.records_cursor
 
             while items_to_show_exist:
                 show_more = yes_no_question('Show more?')
@@ -50,8 +50,8 @@ class EditCommand(Command):
                 if not show_more:
                     break
 
-                self.__show_available_contacts(context.book, False)
-                items_to_show_exist = len(context.book) > self.__records_cursor
+                paginator.show()
+                items_to_show_exist = len(context.book) > paginator.records_cursor
 
             while not record:
                 index = index_question('Type an index of a contact to edit: ', len(context.book))
@@ -103,15 +103,3 @@ class EditCommand(Command):
             return None
 
 
-    def __show_available_contacts(self, book: AddressBook, reset_cursor = False, max_records = 10):
-        if reset_cursor:
-            self.__records_cursor = 0
-
-        start = self.__records_cursor
-        end = start + max_records
-
-        for i, (key,record) in enumerate(list(book.items())[start:end]):
-            print(f'[{i + start}] {record}')
-
-
-        self.__records_cursor = end
