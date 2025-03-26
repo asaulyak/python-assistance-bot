@@ -15,12 +15,16 @@ class HelpCommand(Command):
     def description(self):
         return 'Show available commands'
 
-    def run(self, args, book, commands):        
+    def run(self, args, context, commands):        
         table_title = 'Available commands'
         table_headers = ('command', 'description')
         table_data = [(command.name, command.description) for command in commands]
 
-        TableBuilder(table_title,table_headers,table_data)
+        table = TableBuilder()
+        table.set_title(table_title)
+        table.set_table_headers(table_headers)
+        table.set_table_data(table_data)
+        table.show()
         
 
         return '', False

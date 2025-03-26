@@ -5,6 +5,7 @@ class ColorsConstants(Enum):
     HEADER_COLOR = '#45BF84'
     ROW_COLOR = '#45BF84'
     SUGGESTION_TEXT = '#6c757d'
+    ERROR_COLOR = '#ff0000'
 
     def __str__(self):
         return "Colors constants\n"
