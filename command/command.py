@@ -3,10 +3,6 @@ from execution_context import ExecutionContext
 
 
 class Command:
-    def __init__(self):
-        pass
-
-
     @property
     def name(self):
         return 'empty'
@@ -22,5 +18,5 @@ class Command:
         return 'default description'
 
 
-    def run(self, args: list[str], context: ExecutionContext, commands: List) -> [str, bool]:
+    def run(self, args: list[str], context: ExecutionContext, commands: List) -> (str, bool):
         pass

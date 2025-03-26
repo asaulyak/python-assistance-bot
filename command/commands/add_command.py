@@ -6,6 +6,7 @@ from address_book.email import Email
 from address_book.empty_field import EmptyField
 from command.command import Command
 from execution_context import ExecutionContext
+from user_input.user_input import yes_no_question
 
 
 class AddCommand(Command):
@@ -16,14 +17,14 @@ class AddCommand(Command):
 
     @property
     def aliases(self):
-        return ['create']
+        return ['a', 'create']
 
 
     @property
     def description(self):
-        return 'Adds new record to address book'
+        return 'Add new record to address book'
 
-    def run(self, args: list[str], context: ExecutionContext, commands: List) -> [str, bool]:
+    def run(self, args: list[str], context: ExecutionContext, commands: List) -> (str, bool):
         args_len = len(args)
 
         # get contact details from args if passed
@@ -60,7 +61,7 @@ class AddCommand(Command):
         if birthday and not birthday.is_empty():
             record.add_birthday(birthday)
 
-        message = "Contact added."
+        message = f"Contact added: {record}"
 
         context.book.add_record(record)
 
@@ -85,9 +86,9 @@ class AddCommand(Command):
         existing_record = book.find(name)
 
         if existing_record:
-            should_edit = input('Name already exists in the address book. Do you want to edit the record? Y/n ')
+            should_edit = yes_no_question('Name already exists in the address book. Do you want to edit the record?')
 
-            if not should_edit or should_edit == 'y':
+            if should_edit:
                 print('OK. Let\'s update the record')
 
                 return name

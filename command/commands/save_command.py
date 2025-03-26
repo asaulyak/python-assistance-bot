@@ -16,7 +16,7 @@ class SaveCommand(Command):
 
     @property
     def description(self):
-        return 'Saves current state to the storage'
+        return 'Save current state to the storage'
 
 
 

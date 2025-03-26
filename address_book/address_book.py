@@ -9,9 +9,16 @@ class AddressBook(UserDict):
         self.data[record.name.value] = record
 
 
-    def find(self, name, default = None) -> Record:
+    def find(self, name, default = None) -> Record | None:
         return self.data.get(name.value, default)
 
+
+    def find_by_phone(self, phone) -> list[Record]:
+        return [record for record in self.data.values() if record.find_phone(phone.value)]
+
+
+    def find_by_email(self, email) -> list[Record]:
+        return [record for record in self.data.values() if record.find_email(email.value)]
 
     def delete(self, name):
         del self.data[name.value]

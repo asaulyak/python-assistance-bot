@@ -15,10 +15,10 @@ class ShowAllCommand(Command):
 
     @property
     def description(self):
-        return 'Shows all contacts from teh address book'
+        return 'Show all contacts from the address book'
 
 
-    def run(self, args: list[str], context: ExecutionContext, commands: List) -> [str, bool]:
+    def run(self, args: list[str], context: ExecutionContext, commands: List) -> (str, bool):
         message = str(context.book)
 
         return message, False
