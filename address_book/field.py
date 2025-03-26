@@ -1,5 +1,5 @@
 class Field:
-    def __init__(self, value):
+    def __init__(self, value: str):
         self._validate(value)
         self.value = value
 
@@ -12,6 +12,9 @@ class Field:
         self._validate(value)
 
         self.value = value
+
+    def is_empty(self):
+        return False
 
 
     def _validate(self, value):
