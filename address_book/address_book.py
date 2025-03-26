@@ -23,7 +23,10 @@ class AddressBook(UserDict):
     def delete(self, name):
         del self.data[name.value]
 
-    def get_upcoming_birthdays(self):
+    def get_upcoming_birthdays(self, days_to_birthday: int = 7):
+        if days_to_birthday < 0:
+            raise ValueError('Provide positive number of days to teh birthday')
+
         today = datetime.today().date()
 
         upcoming_birthdays_this_week = []
@@ -40,7 +43,7 @@ class AddressBook(UserDict):
             diff_days_next_year = abs((birthday_next_year - today).days)
             diff_days = min(diff_days_this_year, diff_days_next_year)
 
-            if 0 <= diff_days < 7:
+            if 0 <= diff_days < days_to_birthday:
                 congratulation_date = today + timedelta(days=diff_days)
                 congratulation_date_week_day = congratulation_date.isoweekday()
 
@@ -50,7 +53,7 @@ class AddressBook(UserDict):
 
                 upcoming_birthdays_this_week.append(f'Congratulate {record.name.value} on {congratulation_date.strftime("%d.%m.%Y")}')
 
-        return '\n'.join(birthday for birthday in upcoming_birthdays_this_week)
+        return '\n'.join(birthday for birthday in upcoming_birthdays_this_week) if len(upcoming_birthdays_this_week) > 0 else 'No upcoming birthdays'
 
 
     def __str__(self):
