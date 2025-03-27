@@ -23,6 +23,11 @@ class AddressBook(UserDict):
     def delete(self, name):
         del self.data[name.value]
 
+
+    def is_empty(self):
+        return len(self.data) == 0
+
+
     def get_upcoming_birthdays(self, days_to_birthday: int = 7):
         if days_to_birthday < 0:
             raise ValueError('Provide positive number of days to teh birthday')
@@ -57,4 +62,6 @@ class AddressBook(UserDict):
 
 
     def __str__(self):
-        return f'Address Book:\n {'\n '.join(str(record) for record in self.data.values())}'
+        if self.is_empty():
+            return 'Addressbook is empty'
+        return f'Addressbook:\n {'\n '.join(str(record) for record in self.data.values())}'

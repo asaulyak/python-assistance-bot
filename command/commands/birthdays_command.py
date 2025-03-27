@@ -31,6 +31,6 @@ class BirthdaysCommand(Command):
 
             days_before_birthday = int(days)
 
-        message = context.book.get_upcoming_birthdays(days_before_birthday)
+        message = context.addressbook.get_upcoming_birthdays(days_before_birthday)
 
         return message, False
