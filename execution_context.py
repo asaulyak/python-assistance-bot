@@ -5,4 +5,4 @@ from note_book import NoteBook, Note
 class ExecutionContext:
     def __init__(self):
         self.book = AddressBook()
-        self.note: list[Note] = NoteBook()
+        self.note: NoteBook = NoteBook()

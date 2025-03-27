@@ -12,3 +12,6 @@ class Note:
 
     def add_body(self, body: Body):
         self.body = body
+
+    def add_tag(self, tags: list):
+        ...
