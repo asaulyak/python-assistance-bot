@@ -1,5 +1,5 @@
 import re
-from typing import Self,List,Tuple
+from typing import Self,List,Tuple,Optional
 from rich import box
 from rich.table import Table
 from rich.text import Text
@@ -24,7 +24,6 @@ class TableBuilder:
             box=box.SQUARE_DOUBLE_HEAD,
             min_width=TableSettings.TABLE_MIN_WIDTH.value
             )
-        
 
     def __validate_table(self:Self)->bool:
         """
@@ -34,19 +33,20 @@ class TableBuilder:
             self.__message = 'Table are empty' if not self.__message else self.__message
             return False
         if  len(self.__table_headers) != len(self.__table_data[0]):
-            self.__message = 'Number of headers columns and rows columns are not equal' if not self.__message else self.__message
+            self.__message = 'Number of headers columns and rows columns are not equal' \
+                if not self.__message else self.__message
             return False
         return True
 
 
-    def __build_table(self:Self)->None:        
+    def __build_table(self:Self)->None:
         """
         Builds the table by adding headers and rows.
         """
         # validate table data
         if not self.__validate_table():
             return
-        
+
         # table headers
         for header in self.__table_headers:
             #highlight the header for sorting table
@@ -59,24 +59,30 @@ class TableBuilder:
                 Text(wide(header.capitalize()),style=header_style),
                 justify=TableSettings.COLUMN_ALIGNMENT.value,
                 no_wrap=True,
-                max_width=TableSettings.COLUMN_MAX_WIDTH.value)
-            
+                )
+
         # table rows
         for row in self.__table_data:
-            if len(self.__highlight_text) == 0:
-                self.__table.add_row(*row)
-                continue            
+            if len(self.__highlight_text) == 0:                #
+                self.__table.add_row(self.__highlight_text_in_row(row[0]),\
+                                    row[1])
+                continue
             #highlight text in the row
-            data = [self.__highlight_text_in_row(value) for value in row]
+            data = [self.__highlight_text_in_row(value,Colors.HIGHLIGHT_COLOR.value)\
+                    for value in row]
             self.__table.add_row(*tuple(data))
 
-    def __highlight_text_in_row(self:Self,value:str)->Text:
+    def __highlight_text_in_row(self:Self,value:str ,color:Optional[str]='')->Text:
         """
         Highlights matching text in a table cell.
         """
         text = Text(value)
-        pattern = re.compile(rf"{re.escape(self.__highlight_text)}",re.IGNORECASE)
-        text.highlight_regex(pattern, Colors.HIGHLIGHT_COLOR.value)
+        if "[" in value and "]" in value:
+            pattern = r"\[(.+?)\]"
+            text.highlight_regex(pattern, Colors.SOFT_COLOR.value)
+        else :
+            pattern = re.compile(rf"{re.escape(self.__highlight_text)}",re.IGNORECASE)
+            text.highlight_regex(pattern, color)
         return text
 
     def set_title(self: Self, title: str) -> None:
@@ -121,7 +127,6 @@ class TableBuilder:
             StylizedElements.stylized_print(self.__table)
         else:
             StylizedElements.stylized_print(self.__message, Colors.ERROR_COLOR.value)
-        
 
     def __str__(self: Self) -> str:
         return "Class TableBuilder"
