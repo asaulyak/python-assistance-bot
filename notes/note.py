@@ -4,10 +4,10 @@ from notes.title import Title
 
 
 class Note:
-    def __init__(self, title:Title, text: Text | None = None, tags:list[Tag] = []):
+    def __init__(self, title:Title, text: Text | None = None):
         self.title = title
         self.text = text
-        self.tags = tags
+        self.tags = set()
 
 
     def set_title(self, title: Title):
@@ -19,7 +19,7 @@ class Note:
 
 
     def add_tag(self, tag: Tag):
-        self.tags.append(tag)
+        self.tags.add(tag)
 
 
     def remove_tag(self, tag: Tag):

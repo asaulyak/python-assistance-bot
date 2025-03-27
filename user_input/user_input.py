@@ -11,7 +11,7 @@ def index_question(question: str, max_index: int, min_index: int = 0, offer_quit
         while not user_input.isdigit():
             user_input = input('Number is expected: ')
 
-        return int(response)
+        return int(user_input)
 
     if offer_quit and response.lower() == 'q':
         # stop interaction and return
