@@ -11,8 +11,8 @@ class Notebook(UserList):
         return [note for note in self.data if term in note.title.value]
 
 
-    def find_by_tag(self, tag: Tag):
-        return [note for note in self.data if any(note_tag for note_tag in note.tags if note_tag.value == tag.value)]
+    def find_by_tag(self, tag: str):
+        return [note for note in self.data if any(note_tag for note_tag in note.tags if note_tag.value == tag)]
 
 
     def delete(self, note: Note):
