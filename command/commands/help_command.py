@@ -17,8 +17,8 @@ class HelpCommand(Command):
 
     def run(self, args, context, commands):        
         table_title = 'Available commands'
-        table_headers = ('command', 'description')
-        table_data = [(command.name, command.description) for command in commands]
+        table_headers = ('command', 'description',)
+        table_data = [(f"{command.name} [{', '.join(command.aliases)}]", command.description) for command in commands]
 
         table = TableBuilder()
         table.set_title(table_title)

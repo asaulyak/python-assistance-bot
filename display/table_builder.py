@@ -5,7 +5,7 @@ from rich.table import Table
 from rich.text import Text
 from fancify_text import wide
 from .constants import ColorsConstants as Colors,TableSettings
-from .stylized_print import stylized_print
+from .stylized_elements import StylizedElements
 
 class TableBuilder:
     '''
@@ -84,7 +84,7 @@ class TableBuilder:
         if isinstance(title, str) and title.strip():
             self.__table.title = title.strip().capitalize()
         else:
-            stylized_print("Invalid title", Colors.ERROR_COLOR.value)
+            StylizedElements.stylized_print("Invalid title", Colors.ERROR_COLOR.value)
 
     def set_table_headers(self: Self, table_headers: Tuple[str, ...]) -> None:
         """Sets the table headers."""
@@ -118,9 +118,9 @@ class TableBuilder:
         """Displays the table."""
         self.__build_table()
         if self.__table.columns:
-            stylized_print(self.__table)
+            StylizedElements.stylized_print(self.__table)
         else:
-            stylized_print(self.__message, Colors.ERROR_COLOR.value)
+            StylizedElements.stylized_print(self.__message, Colors.ERROR_COLOR.value)
         
 
     def __str__(self: Self) -> str:
