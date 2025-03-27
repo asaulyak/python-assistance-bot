@@ -1,5 +1,6 @@
 from persistence import load_data
 from command.command_runner import CommandRunner
+from user_input import yes_no_question
 
 
 def parse_command(user_input):
@@ -20,8 +21,8 @@ def main():
     command_parser = CommandRunner()
 
     while True:
-        user_input = input("Enter a command: ")
-        cmd, *args = parse_command(user_input)
+        fix_typo = input("Enter a command: ")
+        cmd, *args = parse_command(fix_typo)
 
         command = command_parser.find_command(cmd)
 
@@ -32,8 +33,9 @@ def main():
                 # this will return command because a match was found
                 command = command_parser.find_command(match)
 
-                user_input = input(f"Did you mean {match}{" ".join(args)}? y/n ")
-                if user_input != 'y':
+                fix_typo = yes_no_question(f"Did you mean {match}{" ".join(args)}?")
+
+                if not fix_typo:
                     continue
             else:
                 print('Command not found')
