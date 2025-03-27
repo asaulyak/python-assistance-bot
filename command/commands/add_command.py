@@ -7,7 +7,7 @@ from address_book.empty_field import EmptyField
 from command.command import Command
 from execution_context import ExecutionContext
 from field import Field
-from user_input.user_input import yes_no_question
+from user_input import yes_no_question
 
 
 class AddCommand(Command):
