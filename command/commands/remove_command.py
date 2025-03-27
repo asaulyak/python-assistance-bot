@@ -4,7 +4,7 @@ from address_book import Record, Name
 from command.command import Command
 from display.paginator import Paginator
 from execution_context import ExecutionContext
-from user_input.user_input import index_question
+from user_input import index_question
 
 
 class RemoveCommand(Command):
@@ -15,7 +15,7 @@ class RemoveCommand(Command):
 
     @property
     def aliases(self):
-        return ['delete', 'r', 'd']
+        return ['delete', 'rm']
 
 
     @property
@@ -39,7 +39,11 @@ class RemoveCommand(Command):
 
             paginator.show()
 
-            index = index_question('Select a contact to remove: ', len(context.book) - 1)
+            index = index_question('Select a contact to remove (or \'q\' to cancel): ', len(context.book) - 1)
+
+            if index is None:
+                # user interrupted contact removal
+                return 'No records removed', False
 
             record = contacts[index]
 

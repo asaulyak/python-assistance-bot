@@ -1,13 +1,14 @@
 from typing import List
 
-from address_book import Name, Field, Phone
+from address_book import Name, Phone
 from address_book.birthday import Birthday
 from address_book.email import Email
 from address_book.empty_field import EmptyField
 from command.command import Command
 from display.paginator import Paginator
 from execution_context import ExecutionContext
-from user_input.user_input import yes_no_question, index_question
+from field import Field
+from user_input import index_question
 
 
 class EditCommand(Command):
@@ -42,19 +43,11 @@ class EditCommand(Command):
             paginator = Paginator(list(context.book.values()))
             paginator.show(True)
 
-            items_to_show_exist = len(context.book) > paginator.records_cursor
-
-            while items_to_show_exist:
-                show_more = yes_no_question('Show more?')
-
-                if not show_more:
-                    break
-
-                paginator.show()
-                items_to_show_exist = len(context.book) > paginator.records_cursor
-
             while not record:
-                index = index_question('Type an index of a contact to edit: ', len(context.book))
+                index = index_question('Type an index of a contact to edit (or \'q\' to cancel): ', len(context.book))
+
+                if index is None:
+                    return 'Editing canceled', False
 
                 record = list(context.book.values())[index]
 

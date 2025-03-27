@@ -4,7 +4,7 @@ from address_book import Name, Phone, Record
 from address_book.email import Email
 from command.command import Command
 from execution_context import ExecutionContext
-from user_input.user_input import index_question
+from user_input import index_question
 
 
 class FindCommand(Command):
@@ -47,7 +47,7 @@ class FindCommand(Command):
 
             self.__show_find_options()
 
-            index = index_question('Type an index of the field: ', 2)
+            index = index_question('Type an index of the field: ', 2, offer_quit = False)
 
             while True:
                 class_name = self.__find_options[index]
