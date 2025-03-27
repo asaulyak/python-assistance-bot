@@ -33,7 +33,7 @@ def main():
                 # this will return command because a match was found
                 command = command_parser.find_command(match)
 
-                fix_typo = yes_no_question(f"Did you mean {match}{" ".join(args)}?")
+                fix_typo = yes_no_question(f"Did you mean '{match}{" ".join(args)}'?")
 
                 if not fix_typo:
                     continue
