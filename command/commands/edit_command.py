@@ -3,11 +3,10 @@ from typing import List
 from address_book import Name, Phone
 from address_book.birthday import Birthday
 from address_book.email import Email
-from address_book.empty_field import EmptyField
 from command.command import Command
 from display.paginator import Paginator
 from execution_context import ExecutionContext
-from field import Field
+from field import init_field
 from user_input import index_question
 
 
@@ -32,7 +31,7 @@ class EditCommand(Command):
 
         name = args[0] if args_len >= 1 else None
 
-        record = context.book.find(Name(name)) if name else None
+        record = context.addressbook.find(Name(name)) if name else None
 
         if name and not record:
             print('Name not found in the address book')
@@ -40,16 +39,16 @@ class EditCommand(Command):
         if not record:
             print('Pick an existing contact to edit')
 
-            paginator = Paginator(list(context.book.values()))
+            paginator = Paginator(list(context.addressbook.values()))
             paginator.show(True)
 
             while not record:
-                index = index_question('Type an index of a contact to edit (or \'q\' to cancel): ', len(context.book))
+                index = index_question('Type an index of a contact to edit (or \'q\' to cancel): ', len(context.addressbook))
 
                 if index is None:
                     return 'Editing canceled', False
 
-                record = list(context.book.values())[index]
+                record = list(context.addressbook.values())[index]
 
 
         phone = None
@@ -57,13 +56,13 @@ class EditCommand(Command):
         birthday = None
 
         while not phone:
-            phone = self.__init_field(Phone, input('Phone:'))
+            phone = init_field(Phone, input('Phone:'))
 
         while not email:
-            email = self.__init_field(Email, input('Email:'))
+            email = init_field(Email, input('Email:'))
 
         while not birthday:
-            birthday = self.__init_field(Birthday, input('Birthday:'))
+            birthday = init_field(Birthday, input('Birthday:'))
 
         if phone and not phone.is_empty():
             record.add_phone(phone)
@@ -76,23 +75,8 @@ class EditCommand(Command):
 
         message = f"Contact updated: {record}"
 
-        context.book.add_record(record)
+        context.addressbook.add_record(record)
 
         return message, False
-
-
-    def __init_field(self, constructor: type(Field), value: str | None) -> Field | None:
-        if value == '':
-            return EmptyField(value)
-
-        if not value:
-            return None
-
-        try:
-            return constructor(value)
-        except Exception as e:
-            print(str(e))
-
-            return None
 
 

@@ -28,18 +28,18 @@ class RemoveCommand(Command):
 
         if len(args) >= 1:
             name = args[0]
-            record = context.book.find(Name(name))
+            record = context.addressbook.find(Name(name))
 
             if not record:
                 return 'Contact not found', False
 
         else:
-            contacts = list(context.book.values())
+            contacts = list(context.addressbook.values())
             paginator = Paginator(contacts)
 
             paginator.show()
 
-            index = index_question('Select a contact to remove (or \'q\' to cancel): ', len(context.book) - 1)
+            index = index_question('Select a contact to remove (or \'q\' to cancel): ', len(context.addressbook) - 1)
 
             if index is None:
                 # user interrupted contact removal
@@ -47,7 +47,7 @@ class RemoveCommand(Command):
 
             record = contacts[index]
 
-        context.book.delete(record.name)
+        context.addressbook.delete(record.name)
 
         message = f'Contact successfully removed: {record}'
 

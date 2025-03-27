@@ -69,14 +69,14 @@ class FindCommand(Command):
                     print(f'Invalid {class_name}')
 
         if name:
-            found = context.book.find(name)
+            found = context.addressbook.find(name)
 
             if found:
                 records.append(found)
         elif phone:
-            records = context.book.find_by_phone(phone)
+            records = context.addressbook.find_by_phone(phone)
         elif email:
-            records = context.book.find_by_email(email)
+            records = context.addressbook.find_by_email(email)
 
         message = 'Nothing found'
 

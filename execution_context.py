@@ -1,8 +1,8 @@
 from address_book import AddressBook
-from notes.note import Note
+from notes import Notebook
 
 
 class ExecutionContext:
     def __init__(self):
-        self.book = AddressBook()
-        self.notes: list[Note] = []
+        self.addressbook = AddressBook()
+        self.notebook = Notebook()
