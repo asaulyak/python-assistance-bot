@@ -15,7 +15,7 @@ class RemoveCommand(Command):
 
     @property
     def aliases(self):
-        return ['delete', 'r', 'd']
+        return ['delete', 'rm']
 
 
     @property

@@ -1,12 +1,13 @@
 from typing import List
 
-from address_book import Name, Field, Phone
+from address_book import Name, Phone
 from address_book.birthday import Birthday
 from address_book.email import Email
 from address_book.empty_field import EmptyField
 from command.command import Command
 from display.paginator import Paginator
 from execution_context import ExecutionContext
+from field import Field
 from user_input.user_input import yes_no_question, index_question
 
 
