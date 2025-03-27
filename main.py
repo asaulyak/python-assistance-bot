@@ -1,6 +1,6 @@
 from persistence import load_data
 from command.command_runner import CommandRunner
-from display import text_fancy,autocomplete
+from display import text_fancy
 
 
 
@@ -20,7 +20,7 @@ def main():
 
     # print("Welcome to the assistant bot!")
     text_fancy("Welcome to the assistant bot !")
-    # autocomplete()
+    
 
     command_parser = CommandRunner()
 
@@ -48,7 +48,8 @@ def main():
         commands_set = list(set(command_parser.commands.values()))
         message, stop = command.run(args, context, commands_set)
 
-        print(message)
+        # print(message)
+        text_fancy(message)
 
         if stop:
             break

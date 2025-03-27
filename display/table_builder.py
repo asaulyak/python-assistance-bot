@@ -1,11 +1,11 @@
 import re
 from typing import Self,List,Tuple
 from rich import box
-from rich.console import Console
 from rich.table import Table
 from rich.text import Text
 from fancify_text import wide
 from .constants import ColorsConstants as Colors,TableSettings
+from .stylized_print import stylized_print
 
 class TableBuilder:
     '''
@@ -84,7 +84,7 @@ class TableBuilder:
         if isinstance(title, str) and title.strip():
             self.__table.title = title.strip().capitalize()
         else:
-            Console().print("Invalid title", style=Colors.ERROR_COLOR.value)
+            stylized_print("Invalid title", Colors.ERROR_COLOR.value)
 
     def set_table_headers(self: Self, table_headers: Tuple[str, ...]) -> None:
         """Sets the table headers."""
@@ -98,7 +98,7 @@ class TableBuilder:
         if isinstance(table_data, list) and table_data:
             self.__table_data = table_data
         else:
-           self.__message = "Invalid table data"
+            self.__message = "Invalid table data"
 
     def set_highlight_text(self: Self, highlight_text: str) -> None:
         """Sets the text to be highlighted in the table."""
@@ -117,11 +117,10 @@ class TableBuilder:
     def show(self: Self) -> None:
         """Displays the table."""
         self.__build_table()
-        console = Console()
         if self.__table.columns:
-            console.print(self.__table)
+            stylized_print(self.__table)
         else:
-            console.print(self.__message, style=Colors.ERROR_COLOR.value)
+            stylized_print(self.__message, Colors.ERROR_COLOR.value)
         
 
     def __str__(self: Self) -> str:
