@@ -1,6 +1,12 @@
 from persistence import load_data
 from command.command_runner import CommandRunner
 from user_input import yes_no_question
+from display import StylizedElements, ColorsConstants
+
+
+
+
+
 
 
 def parse_command(user_input):
@@ -16,7 +22,8 @@ def parse_command(user_input):
 def main():
     context = load_data()
 
-    print("Welcome to the assistant bot!")
+    # print("Welcome to the assistant bot!")
+    StylizedElements.fancy_text("Welcome to the assistant bot!")    
 
     command_parser = CommandRunner()
 
@@ -38,14 +45,18 @@ def main():
                 if not fix_typo:
                     continue
             else:
-                print('Command not found')
+                StylizedElements.stylized_print('Command not found', ColorsConstants.ERROR_COLOR.value)
                 continue
 
 
         commands_set = list(set(command_parser.commands.values()))
         message, stop = command.run(args, context, commands_set)
 
-        print(message)
+        # print(message)
+        if message == 'Good bye!':
+            StylizedElements.fancy_text(message)
+        else:
+            StylizedElements.stylized_print(message)
 
         if stop:
             break

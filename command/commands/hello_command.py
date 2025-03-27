@@ -10,6 +10,10 @@ class HelloCommand(Command):
     @property
     def aliases(self):
         return ['hi', 'start', 'begin']
+    
+    @property
+    def description(self):
+        return 'Greet the user'
 
 
     @property

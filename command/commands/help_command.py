@@ -1,4 +1,8 @@
 from command.command import Command
+from display import TableBuilder,ColorsConstants
+from rich.text import Text
+import re
+
 
 
 class HelpCommand(Command):
@@ -14,12 +18,18 @@ class HelpCommand(Command):
     def description(self):
         return 'Show available commands'
 
-    def run(self, _, __, commands):
-        print('Available commands:')
+    def run(self, args, context, commands):        
+        table_title = 'Available commands'
+        table_headers = ('command', 'description',)
+        table_data = [(f"{command.name:<10} [ {', '.join(command.aliases)} ]", command.description) \
+                       for command in commands]
 
-        for command in commands:
-            print(f'  {command.name}',
-                  f'[{', '.join(alias for alias in command.aliases)}]' if len(command.aliases) else '',
-                  f'- {command.description}')
+
+        table = TableBuilder()
+        table.set_title(table_title)
+        table.set_table_headers(table_headers)
+        table.set_table_data(table_data)
+        table.show()
+        
 
         return '', False
