@@ -1,4 +1,4 @@
-from typing import List
+from typing import Tuple
 from command.command import Command
 from execution_context import ExecutionContext
 from display.paginator import Paginator
@@ -21,7 +21,7 @@ class NoteEditCommand(Command):
     def description(self):
         return "Edit note"
 
-    def run(self, _, context: ExecutionContext, __) -> tuple[str, bool]:
+    def run(self, _, context: ExecutionContext, __) -> Tuple[str, bool]:
         if not context.notebook:
             StylizedElements.stylized_print(
                 "No notes to edit. Please add a note first.",

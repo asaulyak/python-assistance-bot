@@ -21,7 +21,7 @@ class NoteFineCommand(Command):
         return 'Find a note by title or tag'
 
 
-    def run(self, args: list[str], context: ExecutionContext, commands: List) -> (str, bool):
+    def run(self, _, context: ExecutionContext, __) -> Tup(str, bool):
         options = [Title.__name__, Tag.__name__]
 
         for i, option in enumerate(options):
