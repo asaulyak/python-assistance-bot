@@ -1,14 +1,24 @@
+"""
+This module defines the NoteEditCommand, a CLI command that allows
+users to edit existing notes in the notebook. It handles editing
+both the note's title and text interactively.
+"""
+
 from typing import Tuple
 from command.command import Command
 from execution_context import ExecutionContext
 from display.paginator import Paginator
+from display import StylizedElements, ColorsConstants
 from user_input import index_question, yes_no_question
 from notes import Text, Title, Note
 from field import init_field
-from display import StylizedElements, ColorsConstants
 
 
 class NoteEditCommand(Command):
+    """
+    A command class that allows users to edit an existing note in the notebook.
+    """
+
     @property
     def name(self):
         return "edit-note"
