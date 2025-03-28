@@ -1,3 +1,8 @@
+"""This module defines the NoteFindCommand class, which allows users to search for notes
+in the notebook either by their title or by a specific tag.
+Results are displayed in a stylized format using the StylistElements utility.
+"""
+
 from typing import Tuple, List
 
 from command.command import Command
@@ -8,6 +13,13 @@ from display import StylizedElements, ColorsConstants
 
 
 class NoteFineCommand(Command):
+    """A command class that enables searching notes by either title or tag.
+
+    Attributes:
+        name (str): Command name used for invocation.
+        aliases (List[str]): Short aliases for the command.
+        description (str): Description of what the command does."""
+
     @property
     def name(self):
         return "find-note"
