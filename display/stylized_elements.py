@@ -29,6 +29,7 @@ class StylizedElements:
     def console_menu(cls,title:str,options:list[str])->str:
         """Shows a console menu for user to select from a list of options \
             and returns the user's answer"""
+        print()#for spacing
         questions = [
         inquirer.List('answer',
                         message=title,

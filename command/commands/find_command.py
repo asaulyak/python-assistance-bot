@@ -5,6 +5,7 @@ from address_book.email import Email
 from command.command import Command
 from execution_context import ExecutionContext
 from user_input import index_question
+from display import StylizedElements
 
 
 class FindCommand(Command):
@@ -25,6 +26,7 @@ class FindCommand(Command):
         return 'Find contact by name, phone or email'
 
     def run(self, args: list[str], context: ExecutionContext, commands: List) -> (str, bool):
+        
         name: Name | None = None
         phone: Phone | None = None
         email: Email | None = None
@@ -43,11 +45,16 @@ class FindCommand(Command):
             elif possible_name:
                 name = possible_name
         else:
-            print('Select a field to search for')
+            # console menu
+            user_answer = StylizedElements.console_menu('Select a field to search for', self.__find_options)
+            index = self.__find_options.index(user_answer)
 
-            self.__show_find_options()
+            # manual entering index
+            # print('Select a field to search for')
 
-            index = index_question('Type an index of the field: ', 2, offer_quit = False)
+            # self.__show_find_options()
+
+            # index = index_question('Type an index of the field: ', 2, offer_quit = False)
 
             while True:
                 class_name = self.__find_options[index]
