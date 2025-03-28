@@ -19,7 +19,7 @@ class HelpCommand(Command):
     def run(self, args, context, commands):        
         table_title = 'Available commands'
         table_headers = ('command', 'description',)
-        table_data = [(f"{command.name:<10} [ {', '.join(command.aliases)} ]", command.description) \
+        table_data = [(f"{command.name:<12} [ {', '.join(command.aliases)} ]", command.description) \
                        for command in commands]
 
 

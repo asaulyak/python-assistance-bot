@@ -8,15 +8,16 @@ from .constants import ColorsConstants
 class StylizedElements:
     console = Console()
     @classmethod
-    def stylized_print(cls, text:str, style:Optional[str] = '')->None:
+    def stylized_print(cls, text:str, style:Optional[str] = '', end:Optional[str] = '\n')->None:
         """Prints the given text with a specified style.
         If no style is given, just prints the text normally."""
         cls.console.print(text, style=style)
     @classmethod
-    def stylized_input(cls, text:str, style:Optional[str] = '')->None:
+    def stylized_input(cls, text:str, style:Optional[str] = '')->str:
         """Prints the given text with a specified style and waits for user input.
         If no style is given, just prints the text normally."""
-        cls.console.input(Text(text, style=style))
+        user_input = cls.console.input(Text(text, style=style))
+        return  user_input
 
     @classmethod
     def fancy_text(cls, text:str)->None:
