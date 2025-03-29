@@ -5,8 +5,6 @@ from display import StylizedElements, ColorsConstants
 from rich.text import Text
 
 
-
-
 def parse_command(user_input):
     if not user_input:
         return 'not_a_command', []
@@ -26,8 +24,8 @@ def main():
 
     while True:
         
-        fix_typo = StylizedElements.stylized_input("Enter a command: ",\
-                                                    ColorsConstants.MAIN_COLOR.value)
+        fix_typo = StylizedElements.stylized_input("Enter a command: ",
+                                                   ColorsConstants.MAIN_COLOR.value)
         cmd, *args = parse_command(fix_typo)
 
         command = command_parser.find_command(cmd)
@@ -41,7 +39,7 @@ def main():
                 # colorized text
                 text = Text()
                 text.append("Did you mean ", style=ColorsConstants.INPUT_COLOR.value)
-                text.append(f"'{match}{" ".join(args)}' ", \
+                text.append(f"'{match}{" ".join(args)}' ",
                             style=ColorsConstants.HIGHLIGHT_COLOR.value)
                 text.append("?", style=ColorsConstants.INPUT_COLOR.value)
                 
@@ -50,17 +48,13 @@ def main():
                 if not fix_typo:
                     continue
             else:
-                StylizedElements.stylized_print('Command not found',\
+                StylizedElements.stylized_print('Command not found',
                                                  ColorsConstants.ERROR_COLOR.value)
                 continue
 
 
         commands_set = list(set(command_parser.commands.values()))
-        message, stop = command.run(args, context, commands_set)
-
-        
-        if message:
-            StylizedElements.stylized_print(message)
+        stop = command.run(args, context, commands_set)
 
         if stop:
             break

@@ -21,7 +21,7 @@ class BirthdaysCommand(Command):
         return 'Show upcoming birthdays'
 
 
-    def run(self, args: list[str], context: ExecutionContext, commands: List) -> (str, bool):
+    def run(self, args: list[str], context: ExecutionContext, commands: List) -> bool:
         days_before_birthday = 7
 
         if len(args) >= 1:
@@ -29,7 +29,7 @@ class BirthdaysCommand(Command):
 
             if not days.isnumeric():
                 StylizedElements.stylized_print('Provide a valid number of days before birthday', ColorsConstants.ERROR_COLOR.value)
-                return '', False
+                return False
 
             days_before_birthday = int(days)
         
@@ -37,7 +37,7 @@ class BirthdaysCommand(Command):
         table_headers = ('date','day', 'name',)
         table_data = context.addressbook.get_upcoming_birthdays(days_before_birthday)
         if len(table_data) == 0:
-            return '', False
+            return False
         
         table = TableBuilder()
         table.set_title(table_title)
@@ -46,4 +46,4 @@ class BirthdaysCommand(Command):
         table.show()
 
 
-        return '', False
+        return False

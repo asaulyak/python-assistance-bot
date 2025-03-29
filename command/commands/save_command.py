@@ -1,4 +1,5 @@
 from command.command import Command
+from display import StylizedElements
 from execution_context import ExecutionContext
 from persistence import save_data
 
@@ -20,10 +21,12 @@ class SaveCommand(Command):
 
 
 
-    def run(self, _, context: ExecutionContext, *args):
+    def run(self, _, context: ExecutionContext, *args) -> bool:
         message = 'Data successfully saved'
         stop = False
 
         save_data(context)
 
-        return message, stop
+        StylizedElements.stylized_print(message)
+
+        return stop

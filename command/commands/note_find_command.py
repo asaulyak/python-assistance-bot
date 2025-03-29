@@ -32,7 +32,7 @@ class NoteFineCommand(Command):
     def description(self):
         return "Find a note by title or tag"
 
-    def run(self, _, context: ExecutionContext, __) -> Tuple[str, bool]:
+    def run(self, _, context: ExecutionContext, __) -> bool:
         options = [Title.__name__, Tag.__name__]
 
         for i, option in enumerate(options):
@@ -41,7 +41,8 @@ class NoteFineCommand(Command):
         index = index_question("Select field to search: ", len(options) - 1)
 
         if index is None:
-            return "Exiting..", False
+            StylizedElements.stylized_print("Exiting..", ColorsConstants.ERROR_COLOR.value)
+            return False
 
         field_name = options[index]
 
@@ -65,7 +66,4 @@ class NoteFineCommand(Command):
             message, style=ColorsConstants.HEADER_COLOR.value
         )
 
-        return (
-            "",
-            False,
-        )
+        return False

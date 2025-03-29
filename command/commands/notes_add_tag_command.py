@@ -1,6 +1,7 @@
 from typing import List
 
 from command.command import Command
+from display import ColorsConstants, StylizedElements
 from display.paginator import Paginator
 from execution_context import ExecutionContext
 from field import init_field
@@ -24,7 +25,7 @@ class AddTagNoteCommand(Command):
         return 'Add tag to a note'
 
 
-    def run(self, args: list[str], context: ExecutionContext, commands: List) -> (str, bool):
+    def run(self, args: list[str], context: ExecutionContext, commands: List) -> bool:
         paginator = Paginator(context.notebook)
 
         paginator.show()
@@ -32,7 +33,9 @@ class AddTagNoteCommand(Command):
         index = index_question('Type an index of a note to edit (or \'q\' to cancel): ', max_index=len(context.notebook) - 1)
 
         if index is None:
-            return 'No tags added', False
+            StylizedElements.stylized_print('No tags added', ColorsConstants.ERROR_COLOR.value)
+
+            return False
 
         while True:
             tag = init_field(Tag, input('Provide a tag: '))
@@ -46,4 +49,6 @@ class AddTagNoteCommand(Command):
 
         message = f'Added tag to note: {note}'
 
-        return message, False
+        StylizedElements.stylized_print(message)
+
+        return False

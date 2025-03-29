@@ -3,9 +3,9 @@ This module defines the NoteShowAllCommand class, which provides functionality t
 stored in the notebook within the current execution context.
 """
 
-from typing import Tuple
 
 from command.command import Command
+from display import StylizedElements
 from execution_context import ExecutionContext
 
 
@@ -29,7 +29,9 @@ class NoteShowAllCommand(Command):
     def description(self):
         return "Show all notes"
 
-    def run(self, _, context: ExecutionContext, __) -> Tuple[str, bool]:
+    def run(self, _, context: ExecutionContext, __) -> bool:
         message = str(context.notebook)
 
-        return message, False
+        StylizedElements.stylized_print(message)
+
+        return False

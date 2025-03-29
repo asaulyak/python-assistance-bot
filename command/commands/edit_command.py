@@ -4,6 +4,7 @@ from address_book import Name, Phone
 from address_book.birthday import Birthday
 from address_book.email import Email
 from command.command import Command
+from display import StylizedElements, ColorsConstants
 from display.paginator import Paginator
 from execution_context import ExecutionContext
 from field import init_field
@@ -26,7 +27,7 @@ class EditCommand(Command):
     def description(self):
         return 'Update a record in the address book'
 
-    def run(self, args: list[str], context: ExecutionContext, commands: List) -> (str, bool):
+    def run(self, args: list[str], context: ExecutionContext, commands: List) -> bool:
         args_len = len(args)
 
         name = args[0] if args_len >= 1 else None
@@ -46,7 +47,8 @@ class EditCommand(Command):
                 index = index_question('Type an index of a contact to edit (or \'q\' to cancel): ', len(context.addressbook))
 
                 if index is None:
-                    return 'Editing canceled', False
+                    StylizedElements.stylized_print('Editing canceled', ColorsConstants.ERROR_COLOR.value)
+                    return False
 
                 record = list(context.addressbook.values())[index]
 
@@ -73,10 +75,10 @@ class EditCommand(Command):
         if birthday and not birthday.is_empty():
             record.add_birthday(birthday)
 
-        message = f"Contact updated: {record}"
-
         context.addressbook.add_record(record)
 
-        return message, False
+        StylizedElements.stylized_print(f"Contact updated: {record}", ColorsConstants.SUCCESS_COLOR.value)
+
+        return False
 
 

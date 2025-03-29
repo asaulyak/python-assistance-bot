@@ -4,7 +4,6 @@ from address_book import Name, Phone, Record
 from address_book.email import Email
 from command.command import Command
 from execution_context import ExecutionContext
-from user_input import index_question
 from display import StylizedElements,ColorsConstants,TableBuilder
 
 
@@ -25,7 +24,7 @@ class FindCommand(Command):
     def description(self):
         return 'Find contact by name, phone or email'
 
-    def run(self, args: list[str], context: ExecutionContext, commands: List) -> (str, bool):
+    def run(self, args: list[str], context: ExecutionContext, commands: List) -> bool:
         
         name: Name | None = None
         phone: Phone | None = None
@@ -97,7 +96,7 @@ class FindCommand(Command):
             table.show()
             
 
-        return '', False
+        return False
 
 
     def __show_find_options(self):

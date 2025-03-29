@@ -1,4 +1,5 @@
 from command.command import Command
+from display import StylizedElements
 
 
 class HelloCommand(Command):
@@ -10,10 +11,6 @@ class HelloCommand(Command):
     @property
     def aliases(self):
         return ['hi', 'start', 'begin']
-    
-    @property
-    def description(self):
-        return 'Greet the user'
 
 
     @property
@@ -22,7 +19,7 @@ class HelloCommand(Command):
 
 
     def run(self, *args):
-        message = "How can I help you?"
+        StylizedElements.stylized_print("How can I help you?")
         stop = False
 
-        return message, stop
+        return stop

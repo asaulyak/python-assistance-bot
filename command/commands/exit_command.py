@@ -24,8 +24,7 @@ class ExitCommand(Command):
     def run(self, _, context: ExecutionContext, *args):
         message = 'Good bye!'
         StylizedElements.fancy_text(message)
-        stop = True
 
         save_data(context)
 
-        return '', stop
+        return True

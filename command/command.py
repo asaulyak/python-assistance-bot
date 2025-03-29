@@ -18,5 +18,5 @@ class Command:
         return 'default description'
 
 
-    def run(self, args: list[str], context: ExecutionContext, commands: List) -> (str, bool):
+    def run(self, args: list[str], context: ExecutionContext, commands: List) -> bool:
         pass

@@ -31,17 +31,15 @@ class NoteEditCommand(Command):
     def description(self):
         return "Edit note"
 
-    def run(self, _, context: ExecutionContext, __) -> Tuple[str, bool]:
+    def run(self, _, context: ExecutionContext, __) -> bool:
         if not context.notebook:
             StylizedElements.stylized_print(
                 "No notes to edit. Please add a note first.",
                 ColorsConstants.HIGHLIGHT_COLOR.value,
             )
 
-            return (
-                "",
-                False,
-            )
+            return False
+
         paginator = Paginator(context.notebook)
 
         paginator.show()
@@ -63,7 +61,7 @@ class NoteEditCommand(Command):
             "Note was updated successfully.", style=ColorsConstants.SOFT_COLOR.value
         )
 
-        return "", False
+        return False
 
     def _update_field(self, setter: callable, field_cls: type, prompt: str) -> None:
         """Helper to update a field using a setter and a field class."""

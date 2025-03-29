@@ -2,10 +2,10 @@ from typing import List
 
 from address_book import Record, Name
 from command.command import Command
+from display import ColorsConstants, StylizedElements
 from display.paginator import Paginator
 from execution_context import ExecutionContext
 from user_input import index_question
-
 
 class RemoveCommand(Command):
     @property
@@ -23,7 +23,7 @@ class RemoveCommand(Command):
         return 'Remove contact from address book'
 
 
-    def run(self, args: list[str], context: ExecutionContext, commands: List) -> (str, bool):
+    def run(self, args: list[str], context: ExecutionContext, commands: List) -> bool:
         record: Record | None = None
 
         if len(args) >= 1:
@@ -31,7 +31,9 @@ class RemoveCommand(Command):
             record = context.addressbook.find(Name(name))
 
             if not record:
-                return 'Contact not found', False
+                StylizedElements.stylized_print('Contact not found', ColorsConstants.ERROR_COLOR._value_)
+
+                return False
 
         else:
             contacts = list(context.addressbook.values())
@@ -43,7 +45,9 @@ class RemoveCommand(Command):
 
             if index is None:
                 # user interrupted contact removal
-                return 'No records removed', False
+                StylizedElements.stylized_print('No records removed', ColorsConstants.ERROR_COLOR._value_)
+
+                return  False
 
             record = contacts[index]
 
@@ -51,7 +55,9 @@ class RemoveCommand(Command):
 
         message = f'Contact successfully removed: {record}'
 
-        return message, False
+        StylizedElements.stylized_print(message)
+
+        return False
 
 
 

@@ -1,6 +1,7 @@
 from typing import List
 
 from command.command import Command
+from display import StylizedElements
 from execution_context import ExecutionContext
 from field import init_field
 from notes import Title, Text, Note
@@ -21,7 +22,7 @@ class NoteAddCommand(Command):
     def description(self):
         return 'Add a note'
 
-    def run(self, args: list[str], context: ExecutionContext, commands: List) -> (str, bool):
+    def run(self, args: list[str], context: ExecutionContext, commands: List) -> bool:
         title = None
         text = None
 
@@ -35,4 +36,6 @@ class NoteAddCommand(Command):
 
         context.notebook.add(note)
 
-        return 'Note added', False
+        StylizedElements.stylized_print('Note added')
+
+        return False

@@ -19,11 +19,11 @@ class ShowAllCommand(Command):
         return 'Show all contacts from the address book'
 
 
-    def run(self, args: list[str], context: ExecutionContext, commands: List) -> (str, bool):
+    def run(self, args: list[str], context: ExecutionContext, commands: List) -> bool:
 
         if context.addressbook.is_empty():
             StylizedElements.stylized_input('Address book is empty',ColorsConstants.WARNING_COLOR.value)
-            return '', False
+            return False
         
         table_title = 'Address book'
         table_headers = ('name', 'emails','phones','birthday')
@@ -37,4 +37,4 @@ class ShowAllCommand(Command):
         table.set_table_data(table_data)
         table.show()
 
-        return '', False
+        return False

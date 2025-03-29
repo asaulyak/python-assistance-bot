@@ -30,4 +30,4 @@ class HelpCommand(Command):
         table.show()
         
 
-        return '', False
+        return False
