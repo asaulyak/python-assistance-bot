@@ -27,5 +27,12 @@ class Note:
     def remove_tag(self, tag: Tag):
         self.tags.remove(tag)
 
+    def table_data(self):
+        return (
+            self.title.value,
+            self.text.value if self.text else "",
+            ", ".join(tag.value for tag in self.tags),
+        )
+
     def __str__(self):
         return self.title.value
