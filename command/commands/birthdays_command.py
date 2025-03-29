@@ -1,7 +1,8 @@
-from typing import List
+from typing import List,Tuple
 
 from command.command import Command
 from execution_context import ExecutionContext
+from display import StylizedElements,ColorsConstants,TableBuilder
 
 
 class BirthdaysCommand(Command):
@@ -27,10 +28,23 @@ class BirthdaysCommand(Command):
             days = args[0]
 
             if not days.isnumeric():
-                return 'Provide a valid number of days before birthday', False
+                StylizedElements.stylized_print('Provide a valid number of days before birthday', ColorsConstants.ERROR_COLOR.value)
+                return '', False
 
             days_before_birthday = int(days)
+        
+        table_title = 'Upcoming birthdays'
+        table_headers = ('date','day', 'name',)
+        table_data = context.addressbook.get_upcoming_birthdays(days_before_birthday)
+        if len(table_data) == 0:
+            return '', False
+        
+        table = TableBuilder()
+        table.set_title(table_title)
+        table.set_table_headers(table_headers)
+        table.set_table_data(table_data)
+        table.show()
 
-        message = context.addressbook.get_upcoming_birthdays(days_before_birthday)
+        # message = context.addressbook.get_upcoming_birthdays(days_before_birthday)
 
-        return message, False
+        return '', False
