@@ -1,7 +1,5 @@
 from command.command import Command
-from display import TableBuilder,ColorsConstants
-from rich.text import Text
-import re
+from display import TableBuilder
 
 
 
@@ -21,7 +19,7 @@ class HelpCommand(Command):
     def run(self, args, context, commands):        
         table_title = 'Available commands'
         table_headers = ('command', 'description',)
-        table_data = [(f"{command.name:<10} [ {', '.join(command.aliases)} ]", command.description) \
+        table_data = [(f"{command.name:<12} [ {', '.join(command.aliases)} ]", command.description) \
                        for command in commands]
 
 

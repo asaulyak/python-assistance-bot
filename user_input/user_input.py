@@ -1,5 +1,13 @@
+from display import StylizedElements, ColorsConstants
+from rich.text import Text
+from rich.console import Console
+
 def yes_no_question(question: str) -> bool:
-    response = input(f'{question} Y/n ')
+    console = Console()
+    styled_prompt = Text()
+    styled_prompt.append(question)
+    styled_prompt.append(' Y/n ', style=ColorsConstants.HIGHLIGHT_COLOR.value)
+    response = console.input(styled_prompt)
 
     return not response or response.lower() == 'y'
 
