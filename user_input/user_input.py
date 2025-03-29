@@ -4,7 +4,6 @@ from rich.console import Console
 from prompt_toolkit import prompt
 from prompt_toolkit.completion import WordCompleter
 from prompt_toolkit.styles import Style
-from prompt_toolkit.completion import Completer
 from display import  ColorsConstants
 
 def yes_no_question(question: str) -> bool:
