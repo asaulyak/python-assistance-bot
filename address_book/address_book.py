@@ -57,14 +57,12 @@ class AddressBook(UserDict):
                     congratulation_date_shift = 8 - congratulation_date_week_day
                     congratulation_date += timedelta(days=congratulation_date_shift)
 
-                # upcoming_birthdays_this_week.append(f'Congratulate {record.name.value} on {congratulation_date.strftime("%d.%m.%Y")}')
                 upcoming_birthdays_this_week.append((congratulation_date.strftime("%d.%m.%Y"),congratulation_date.strftime("%A"),record.name.value))
         if len(upcoming_birthdays_this_week) > 0:
             return upcoming_birthdays_this_week
 
         else:
             StylizedElements.stylized_print('No upcoming birthdays', ColorsConstants.WARNING_COLOR.value)
-        # return '\n'.join(birthday for birthday in upcoming_birthdays_this_week) 
         return []
 
 

@@ -45,6 +45,5 @@ class BirthdaysCommand(Command):
         table.set_table_data(table_data)
         table.show()
 
-        # message = context.addressbook.get_upcoming_birthdays(days_before_birthday)
 
         return '', False

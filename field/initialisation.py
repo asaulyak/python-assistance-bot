@@ -12,7 +12,7 @@ def init_field(constructor: type(Field), value: str | None) -> Field | None:
     try:
         return constructor(value)
     except Exception as e:
-        # print(str(e))
+        
         StylizedElements.stylized_print(str(e), ColorsConstants.ERROR_COLOR.value)
 
         return None

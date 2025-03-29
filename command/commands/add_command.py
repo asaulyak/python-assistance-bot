@@ -81,8 +81,7 @@ class AddCommand(Command):
             should_edit = yes_no_question(text)
 
             if should_edit:
-                StylizedElements.stylized_print('OK. Let\'s update the record', ColorsConstants.SUCCESS_COLOR.value)
-                # print('OK. Let\'s update the record')
+                StylizedElements.stylized_print('OK. Let\'s update the record', ColorsConstants.SUCCESS_COLOR.value)                
 
                 return name
             else:

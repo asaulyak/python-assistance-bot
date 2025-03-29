@@ -49,17 +49,9 @@ class FindCommand(Command):
             user_answer = StylizedElements.console_menu('Select a field to search for', self.__find_options)
             index = self.__find_options.index(user_answer)
 
-            # manual entering index
-            # print('Select a field to search for')
-
-            # self.__show_find_options()
-
-            # index = index_question('Type an index of the field: ', 2, offer_quit = False)
-
             while True:
                 class_name = self.__find_options[index]
 
-                # term = input(f'Provide {class_name}: ')
                 term = StylizedElements.stylized_input(f'Provide {class_name}: ', ColorsConstants.INPUT_COLOR.value)
 
                 try:
@@ -75,7 +67,7 @@ class FindCommand(Command):
                     break
                 except:
                     StylizedElements.stylized_print(f'Invalid {class_name}', ColorsConstants.ERROR_COLOR.value)
-                    # print(f'Invalid {class_name}')
+                    
 
         if name:
             found = context.addressbook.find(name)
@@ -90,7 +82,7 @@ class FindCommand(Command):
 
         if len(records) == 0:
             StylizedElements.stylized_print('Nothing found', ColorsConstants.WARNING_COLOR.value)
-            # message = 'Nothing found'
+            
 
         if len(records) > 0:
             table_title = 'Address book'

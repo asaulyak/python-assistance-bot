@@ -20,7 +20,6 @@ def parse_command(user_input):
 def main():
     context = load_data()
 
-    # print("Welcome to the assistant bot!")
     StylizedElements.fancy_text("Welcome to the assistant bot!")    
 
     command_parser = CommandRunner()
@@ -59,7 +58,7 @@ def main():
         commands_set = list(set(command_parser.commands.values()))
         message, stop = command.run(args, context, commands_set)
 
-        # print(message)
+        
         if message:
             StylizedElements.stylized_print(message)
 
