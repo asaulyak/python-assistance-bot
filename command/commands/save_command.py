@@ -1,5 +1,5 @@
 from command.command import Command
-from display import StylizedElements
+from display import StylizedElements,ColorsConstants
 from execution_context import ExecutionContext
 from persistence import save_data
 
@@ -27,6 +27,6 @@ class SaveCommand(Command):
 
         save_data(context)
 
-        StylizedElements.stylized_print(message)
+        StylizedElements.stylized_print(message, ColorsConstants.SUCCESS_COLOR.value)
 
         return stop
