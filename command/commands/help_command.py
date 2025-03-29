@@ -16,11 +16,12 @@ class HelpCommand(Command):
     def description(self):
         return 'Show available commands'
 
-    def run(self, args, context, commands):        
+    def run(self, args, context, commands):
+        sorted_commands = sorted(commands, key=lambda command: (command.name.endswith('note') or command.name.endswith('notes'), command.name))
+
         table_title = 'Available commands'
         table_headers = ('command', 'description',)
-        table_data = [(f"{command.name:<12} [ {', '.join(command.aliases)} ]", command.description) \
-                       for command in commands]
+        table_data = [(f"{command.name:<12} [ {', '.join(command.aliases)} ]", command.description) for command in sorted_commands]
 
 
         table = TableBuilder()
