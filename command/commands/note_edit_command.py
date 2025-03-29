@@ -4,12 +4,10 @@ users to edit existing notes in the notebook. It handles editing
 both the note's title and text interactively.
 """
 
-from typing import Tuple
+from prompt_toolkit import prompt
 from command.command import Command
 from execution_context import ExecutionContext
-from display.paginator import Paginator
 from display import StylizedElements, ColorsConstants
-from user_input import index_question, yes_no_question
 from notes import Text, Title, Note
 from field import init_field
 
@@ -40,34 +38,45 @@ class NoteEditCommand(Command):
 
             return False
 
-        paginator = Paginator(context.notebook)
+        note_titles = [
+            f"{i + 1}. {note.get_title().value}"
+            for i, note in enumerate(context.notebook)
+        ]
 
-        paginator.show()
-
-        index = index_question(
-            "Type an index of a note to edit (or 'q' to cancel): ",
-            max_index=len(context.notebook) - 1,
+        selected_note_str = StylizedElements.console_menu(
+            "Select a note to edit:", note_titles
         )
 
-        note: Note = context.notebook[index]
+        selected_index = int(selected_note_str.split(".")[0]) - 1
 
-        if yes_no_question("Do you want to edit the title?"):
-            self._update_field(note.set_title, Title, "Enter new title: ")
+        note: Note = context.notebook[selected_index]
+        existing_title = note.get_title().value
+        existing_text = note.get_text().value
 
-        if yes_no_question("Do you want to edit the text?"):
-            self._update_field(note.set_text, Text, "Enter new text: ")
+        field_to_edit = StylizedElements.console_menu(
+            "What would you like to edit?", ["Title", "Text", "Both"]
+        )
+
+        if field_to_edit in ("Title", "Both"):
+            new_title = prompt(message="Edit title: ", default=existing_title)
+            self._update_field(note.set_title, Title, new_title)
+
+        if field_to_edit in ("Text", "Both"):
+            new_text = prompt(message="Edit text: ", default=existing_text)
+            self._update_field(note.set_text, Text, new_text)
 
         StylizedElements.stylized_print(
-            "Note was updated successfully.", style=ColorsConstants.SOFT_COLOR.value
+            "Note was updated successfully.",
+            style=ColorsConstants.SUCCESS_COLOR.value,
         )
 
-        return False
+        stop = False
+        return stop
 
-    def _update_field(self, setter: callable, field_cls: type, prompt: str) -> None:
+    def _update_field(self, setter: callable, field_cls: type, value: str) -> None:
         """Helper to update a field using a setter and a field class."""
         while True:
-            raw_value = input(prompt)
-            field = init_field(field_cls, raw_value)
+            field = init_field(field_cls, value)
             if field and not field.is_empty():
                 setter(field)
                 break
