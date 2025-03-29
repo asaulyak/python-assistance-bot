@@ -66,7 +66,7 @@ class AddressBook(UserDict):
             return upcoming_birthdays_this_week
 
         else:
-            StylizedElements.stylized_print('No upcoming birthdays', ColorsConstants.WARNING_COLOR.value)
+            StylizedElements.stylized_print(f'No upcoming birthdays in the next {days_to_birthday} day(s)', ColorsConstants.WARNING_COLOR.value)
         return []
 
 

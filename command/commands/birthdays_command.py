@@ -33,7 +33,7 @@ class BirthdaysCommand(Command):
 
             days_before_birthday = int(days)
         
-        table_title = 'Upcoming birthdays'
+        table_title = f'Upcoming birthdays in the next {days_before_birthday} day(s)'
         table_headers = ('date','day', 'name',)
         table_data = context.addressbook.get_upcoming_birthdays(days_before_birthday)
         if len(table_data) == 0:
