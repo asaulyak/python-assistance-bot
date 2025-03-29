@@ -5,7 +5,7 @@ from address_book.email import Email
 from command.command import Command
 from execution_context import ExecutionContext
 from user_input import index_question
-from display import StylizedElements
+from display import StylizedElements,ColorsConstants,TableBuilder
 
 
 class FindCommand(Command):
@@ -59,7 +59,8 @@ class FindCommand(Command):
             while True:
                 class_name = self.__find_options[index]
 
-                term = input(f'Provide {class_name}: ')
+                # term = input(f'Provide {class_name}: ')
+                term = StylizedElements.stylized_input(f'Provide {class_name}: ', ColorsConstants.INPUT_COLOR.value)
 
                 try:
                     parsed = globals()[class_name](term)
@@ -73,7 +74,8 @@ class FindCommand(Command):
 
                     break
                 except:
-                    print(f'Invalid {class_name}')
+                    StylizedElements.stylized_print(f'Invalid {class_name}', ColorsConstants.ERROR_COLOR.value)
+                    # print(f'Invalid {class_name}')
 
         if name:
             found = context.addressbook.find(name)
@@ -85,12 +87,25 @@ class FindCommand(Command):
         elif email:
             records = context.addressbook.find_by_email(email)
 
-        message = 'Nothing found'
+
+        if len(records) == 0:
+            StylizedElements.stylized_print('Nothing found', ColorsConstants.WARNING_COLOR.value)
+            # message = 'Nothing found'
 
         if len(records) > 0:
-            message = '\n'.join([str(record) for record in records])
+            table_title = 'Address book'
+            table_headers = ('name', 'emails','phones','birthday')
+            table_data = [record.table_data() for record in records]            
 
-        return message, False
+            table = TableBuilder()
+            table.set_title(table_title)
+            table.set_table_headers(table_headers)
+            table.set_table_data(table_data)
+            table.set_highlight_text(term)
+            table.show()
+            
+
+        return '', False
 
 
     def __show_find_options(self):

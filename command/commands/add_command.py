@@ -8,6 +8,7 @@ from execution_context import ExecutionContext
 from field import init_field
 from user_input import yes_no_question
 from display import StylizedElements, ColorsConstants
+from rich.text import Text
 
 
 class AddCommand(Command):
@@ -74,10 +75,14 @@ class AddCommand(Command):
         existing_record = book.find(name)
 
         if existing_record:
-            should_edit = yes_no_question('Name already exists in the address book. Do you want to edit the record?')
+            text = Text()
+            text.append('Name already exists in the address book. ',ColorsConstants.HIGHLIGHT_COLOR.value)
+            text.append('Do you want to edit the record?',ColorsConstants.INPUT_COLOR.value)
+            should_edit = yes_no_question(text)
 
             if should_edit:
-                print('OK. Let\'s update the record')
+                StylizedElements.stylized_print('OK. Let\'s update the record', ColorsConstants.SUCCESS_COLOR.value)
+                # print('OK. Let\'s update the record')
 
                 return name
             else:

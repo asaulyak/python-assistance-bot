@@ -10,6 +10,7 @@ class ColorsConstants(Enum):
     ERROR_COLOR = '#ff0000'
     SUCCESS_COLOR = '#0edf3e'
     INPUT_COLOR = '#0842a0'
+    WARNING_COLOR = '#fbff08'
 
     def __str__(self):
         return "Colors constants\n"

@@ -3,10 +3,6 @@ from command.command_runner import CommandRunner
 from user_input import yes_no_question
 from display import StylizedElements, ColorsConstants
 from rich.text import Text
-from rich.console import Console
-
-
-console = Console()
 
 
 
@@ -31,7 +27,8 @@ def main():
 
     while True:
         
-        fix_typo = StylizedElements.stylized_input("Enter a command: ", ColorsConstants.MAIN_COLOR.value)
+        fix_typo = StylizedElements.stylized_input("Enter a command: ",\
+                                                    ColorsConstants.MAIN_COLOR.value)
         cmd, *args = parse_command(fix_typo)
 
         command = command_parser.find_command(cmd)
@@ -42,9 +39,11 @@ def main():
             if match:
                 # this will return command because a match was found
                 command = command_parser.find_command(match)
+                # colorized text
                 text = Text()
                 text.append("Did you mean ", style=ColorsConstants.INPUT_COLOR.value)
-                text.append(f"'{match}{" ".join(args)}' ", style=ColorsConstants.HIGHLIGHT_COLOR.value)
+                text.append(f"'{match}{" ".join(args)}' ", \
+                            style=ColorsConstants.HIGHLIGHT_COLOR.value)
                 text.append("?", style=ColorsConstants.INPUT_COLOR.value)
                 
                 fix_typo = yes_no_question(text)
@@ -52,15 +51,16 @@ def main():
                 if not fix_typo:
                     continue
             else:
-                StylizedElements.stylized_print('Command not found', ColorsConstants.ERROR_COLOR.value)
+                StylizedElements.stylized_print('Command not found',\
+                                                 ColorsConstants.ERROR_COLOR.value)
                 continue
 
 
         commands_set = list(set(command_parser.commands.values()))
         message, stop = command.run(args, context, commands_set)
 
-        # print(message)  
-        if message:     
+        # print(message)
+        if message:
             StylizedElements.stylized_print(message)
 
         if stop:

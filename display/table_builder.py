@@ -63,9 +63,12 @@ class TableBuilder:
 
         # table rows
         for row in self.__table_data:
-            if len(self.__highlight_text) == 0:                #
-                self.__table.add_row(self.__highlight_text_in_row(row[0]),\
+            if len(self.__highlight_text) == 0:
+                if len(row) == 2:
+                    self.__table.add_row(self.__highlight_text_in_row(row[0]),\
                                     row[1])
+                else:
+                    self.__table.add_row(*tuple(row))
                 continue
             #highlight text in the row
             data = [self.__highlight_text_in_row(value,Colors.HIGHLIGHT_COLOR.value)\

@@ -2,6 +2,7 @@ from typing import List
 
 from command.command import Command
 from execution_context import ExecutionContext
+from display import StylizedElements,ColorsConstants,TableBuilder
 
 
 class ShowAllCommand(Command):
@@ -19,6 +20,21 @@ class ShowAllCommand(Command):
 
 
     def run(self, args: list[str], context: ExecutionContext, commands: List) -> (str, bool):
-        message = str(context.addressbook)
 
-        return message, False
+        if context.addressbook.is_empty():
+            StylizedElements.stylized_input('Address book is empty',ColorsConstants.WARNING_COLOR.value)
+            return '', False
+        
+        table_title = 'Address book'
+        table_headers = ('name', 'emails','phones','birthday')
+        table_data = context.addressbook.table_data()
+    
+
+
+        table = TableBuilder()
+        table.set_title(table_title)
+        table.set_table_headers(table_headers)
+        table.set_table_data(table_data)
+        table.show()
+
+        return '', False
