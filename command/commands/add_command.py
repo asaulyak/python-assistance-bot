@@ -39,17 +39,17 @@ class AddCommand(Command):
         name = self.__check_name_existence(context.addressbook, name) if name else None
 
         while not name or name.is_empty():
-            name = init_field(Name, StylizedElements.stylized_input('\tName: ', ColorsConstants.INPUT_COLOR.value))
+            name = init_field(Name, StylizedElements.stylized_input('Name: ', ColorsConstants.INPUT_COLOR.value))
             name = self.__check_name_existence(context.addressbook, name) if name else None
 
         while not phone:
-            phone = init_field(Phone, StylizedElements.stylized_input('\tPhone: ', ColorsConstants.INPUT_COLOR.value))
+            phone = init_field(Phone, StylizedElements.stylized_input('Phone: ', ColorsConstants.INPUT_COLOR.value))
 
         while not email:
-            email = init_field(Email, StylizedElements.stylized_input('\tEmail: ', ColorsConstants.INPUT_COLOR.value))
+            email = init_field(Email, StylizedElements.stylized_input('Email: ', ColorsConstants.INPUT_COLOR.value))
 
         while not birthday:
-            birthday = init_field(Birthday, StylizedElements.stylized_input('\tBirthday: ', ColorsConstants.INPUT_COLOR.value))
+            birthday = init_field(Birthday, StylizedElements.stylized_input('Birthday: ', ColorsConstants.INPUT_COLOR.value))
 
         # get an existing record or create one with the provided name
         record = context.addressbook.find(name, Record(name))
