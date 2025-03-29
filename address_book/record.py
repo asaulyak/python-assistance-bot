@@ -1,3 +1,4 @@
+from .address import Address
 from .birthday import Birthday
 from .email import Email
 from .name import Name
@@ -9,7 +10,9 @@ class Record:
         self.name: Name = name
         self.phones: set[Phone] = set()
         self.birthday: Birthday | None = None
+        self.address: Address | None = None
         self.emails: set[Email] = set()
+
 
     def add_phone(self, phone: Phone):
         self.phones.add(phone)
@@ -51,8 +54,24 @@ class Record:
                 return e
 
 
+    def add_address(self, address:Address):
+        self.address = address
+
+
     def __str__(self):
-        return f"Name: {self.name.value}, {f'Birthday: {str(self.birthday)},' if self.birthday else '' } Emails: {'; '.join(email.value for email in self.emails)}, Phones: {'; '.join(p.value for p in self.phones)}"
+        birthday = f', Birthday: {str(self.birthday)},' if self.birthday else ''
+        phones = f', Phones: {'; '.join(p.value for p in self.phones)}' if self.phones else ''
+        emails = f', Emails: {'; '.join(email.value for email in self.emails)}' if self.emails else ''
+        address = f', Address: {self.address.value}' if self.address else ''
+
+        return f"Name: {self.name.value}{birthday}{phones}{emails}{address}"
 
     def table_data(self):
-        return (self.name.value, '\n'.join(email.value for email in self.emails), '\n'.join(p.value for p in self.phones), str(self.birthday) if self.birthday else '')
+        name = self.name.value
+        emails = '\n'.join(email.value for email in self.emails)
+        phones = '\n'.join(p.value for p in self.phones)
+        birthday = str(self.birthday) if self.birthday else ''
+        address = self.address.value if self.address else ''
+
+
+        return (name, emails, phones, birthday, address)

@@ -26,7 +26,7 @@ class ShowAllCommand(Command):
             return False
         
         table_title = 'Address book'
-        table_headers = ('name', 'emails','phones','birthday')
+        table_headers = ('name', 'emails','phones','birthday', 'address')
         table_data = context.addressbook.table_data()
     
 
