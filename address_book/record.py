@@ -52,4 +52,7 @@ class Record:
 
 
     def __str__(self):
-        return f"Name: {self.name.value}{f': {str(self.birthday)},' if self.birthday else ',' } emails: {'; '.join(email.value for email in self.emails)}, phones: {'; '.join(p.value for p in self.phones)}"
+        return f"Name: {self.name.value}, {f'Birthday: {str(self.birthday)},' if self.birthday else '' } Emails: {'; '.join(email.value for email in self.emails)}, Phones: {'; '.join(p.value for p in self.phones)}"
+
+    def table_data(self):
+        return (self.name.value, '\n'.join(email.value for email in self.emails), '\n'.join(p.value for p in self.phones), str(self.birthday) if self.birthday else '')
