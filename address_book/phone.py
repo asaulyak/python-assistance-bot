@@ -5,7 +5,7 @@ class Phone(Field):
         valid = len(value) == 10 and value.isdigit()
 
         if not valid:
-            raise ValueError('Invalid phone number')
+            raise ValueError('Phone should be 10 characters long and contain only digits')
 
 
     def __str__(self):
