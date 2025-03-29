@@ -15,7 +15,7 @@ class AddressBook(UserDict):
 
 
     def find_by_name(self, name) -> list[Record]:
-        return [record for record in self.data.values() if name.value in record.name.value]
+        return [record for record in self.data.values() if name.value.lower() in record.name.value.lower()]
 
 
     def find_by_phone(self, phone) -> list[Record]:
