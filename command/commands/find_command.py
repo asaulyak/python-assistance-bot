@@ -69,7 +69,7 @@ class FindCommand(Command):
                     
 
         if name:
-            found = context.addressbook.find(name)
+            found = context.addressbook.find_by_name(name)
 
             if found:
                 records.append(found)
