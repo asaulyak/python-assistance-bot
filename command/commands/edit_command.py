@@ -1,6 +1,6 @@
 from typing import List
 
-from address_book import Name, Phone
+from address_book import Name, Phone, Address
 from address_book.birthday import Birthday
 from address_book.email import Email
 from command.command import Command
@@ -56,15 +56,19 @@ class EditCommand(Command):
         phone = None
         email = None
         birthday = None
+        address= None
 
         while not phone:
-            phone = init_field(Phone, input('Phone:'))
+            phone = init_field(Phone, input('Phone: '))
 
         while not email:
-            email = init_field(Email, input('Email:'))
+            email = init_field(Email, input('Email: '))
 
         while not birthday:
-            birthday = init_field(Birthday, input('Birthday:'))
+            birthday = init_field(Birthday, input('Birthday: '))
+
+        while not address:
+            address = init_field(Address, input('Address: '))
 
         if phone and not phone.is_empty():
             record.add_phone(phone)
@@ -74,6 +78,9 @@ class EditCommand(Command):
 
         if birthday and not birthday.is_empty():
             record.add_birthday(birthday)
+
+        if address and not address.is_empty():
+            record.add_address(address)
 
         context.addressbook.add_record(record)
 

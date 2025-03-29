@@ -21,7 +21,7 @@ class HelpCommand(Command):
 
         table_title = 'Available commands'
         table_headers = ('command', 'description',)
-        table_data = [(f"{command.name:<12} [ {', '.join(command.aliases)} ]", command.description) for command in sorted_commands]
+        table_data = [(f"{command.name:<12} [{', '.join(command.aliases)}]", command.description) for command in sorted_commands]
 
 
         table = TableBuilder()

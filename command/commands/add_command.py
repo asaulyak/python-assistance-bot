@@ -1,6 +1,6 @@
 from typing import List
 
-from address_book import Record, Name, Phone, AddressBook
+from address_book import Record, Name, Phone, AddressBook, Address
 from address_book.birthday import Birthday
 from address_book.email import Email
 from command.command import Command
@@ -34,6 +34,7 @@ class AddCommand(Command):
         phone = None if args_len < 2 else init_field(Phone, args[1])
         email = None if args_len < 3 else init_field(Email, args[2])
         birthday = None if args_len < 4 else init_field(Birthday, args[3])
+        address = None
 
         # reset the name to None if user doesn't want to edit existing record
         name = self.__check_name_existence(context.addressbook, name) if name else None
@@ -51,6 +52,10 @@ class AddCommand(Command):
         while not birthday:
             birthday = init_field(Birthday, StylizedElements.stylized_input('Birthday: ', ColorsConstants.INPUT_COLOR.value))
 
+        while not address:
+            address = init_field(Address, StylizedElements.stylized_input('Address: ', ColorsConstants.INPUT_COLOR.value))
+
+
         # get an existing record or create one with the provided name
         record = context.addressbook.find(name, Record(name))
 
@@ -62,6 +67,9 @@ class AddCommand(Command):
 
         if birthday and not birthday.is_empty():
             record.add_birthday(birthday)
+
+        if address and not address.is_empty():
+            record.add_address(address)
 
         message = f"Contact added: {record}"
         StylizedElements.stylized_print(message, ColorsConstants.SUCCESS_COLOR.value)
