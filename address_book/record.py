@@ -60,7 +60,7 @@ class Record:
 
     def __str__(self):
         birthday = f', Birthday: {str(self.birthday)},' if self.birthday else ''
-        phones = f', Phones: {'; '.join(p.value for p in self.phones)}' if self.phones else ''
+        phones = f', Phones: {'; '.join(str(p) for p in self.phones)}' if self.phones else ''
         emails = f', Emails: {'; '.join(email.value for email in self.emails)}' if self.emails else ''
         address = f', Address: {self.address.value}' if self.address else ''
 
@@ -69,7 +69,7 @@ class Record:
     def table_data(self):
         name = self.name.value
         emails = '\n'.join(email.value for email in self.emails)
-        phones = '\n'.join(p.value for p in self.phones)
+        phones = '\n'.join(str(p) for p in self.phones)
         birthday = str(self.birthday) if self.birthday else ''
         address = self.address.value if self.address else ''
 
