@@ -17,7 +17,7 @@ def parse_command(user_input):
 
 def main():
     context = load_data()
-    matrix_rain()
+    # matrix_rain()
     StylizedElements.fancy_text("Follow the white rabbit")
     command_parser = CommandRunner()
 
