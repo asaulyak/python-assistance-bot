@@ -7,6 +7,7 @@ selected note is deleted from the notebook and a confirmation message
 is displayed."""
 
 from command.command import Command
+from display.paginator import Paginator
 from notes import Notebook
 from display import StylizedElements, ColorsConstants
 from execution_context import ExecutionContext
@@ -43,18 +44,15 @@ class NoteDeleteCommand(Command):
 
             return stop
 
-        options = [
-            f"{i + 1}. {note.get_title().value}" for i, note in enumerate(notebook)
-        ]
-        options.append("Cancel")
+        notes = notebook.to_list()
 
-        selected = StylizedElements.console_menu("Select a note to edit:", options)
+        paginator = Paginator(notes)
+        note_index = paginator.show('Select a note to delete')
 
-        if selected == "Cancel":
-            return stop
+        if note_index is None:
+            return False
 
-        selected_index = options.index(selected)
-        note_to_remove = notebook[selected_index]
+        note_to_remove = notebook[note_index]
         notebook.delete(note_to_remove)
 
         StylizedElements.stylized_print(
