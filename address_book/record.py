@@ -14,6 +14,10 @@ class Record:
         self.emails: set[Email] = set()
 
 
+    def set_name(self, name: Name):
+        self.name = name
+
+
     def add_phone(self, phone: Phone):
         self.phones.add(phone)
 
@@ -23,23 +27,28 @@ class Record:
             raise KeyError(f"Phone number {new_phone} already exists")
 
         for p in self.phones:
-            if p.value == phone_number:
-                p.update(new_phone)
+            if p.value == phone_number.value:
+                p.update(new_phone.value)
 
                 return
 
         raise ValueError(f"Phone number {phone_number} not found")
 
-    def find_phone(self, phone_number):
+    def find_phone(self, phone):
         for p in self.phones:
-            if p.value == phone_number:
+            if p.value == phone.value:
 
                 return p
 
-    def remove_phone(self, phone_number):
+    def remove_phone(self, phone):
+        to_remove = None
+
         for p in self.phones:
-            if p.value == phone_number:
-                self.phones.remove(p)
+            if p.value == phone.value:
+                to_remove = p
+
+        if to_remove:
+            self.phones.remove(to_remove)
 
     def add_birthday(self, birthday: Birthday):
         self.birthday = birthday
@@ -52,6 +61,31 @@ class Record:
             if e.value == email:
 
                 return e
+
+    def remove_email(self, email):
+        to_remove = None
+
+        for e in self.emails:
+            if e.value == email.value:
+                to_remove = e
+
+        if to_remove:
+            self.emails.remove(to_remove)
+
+
+
+    def edit_email(self, email, new_email):
+        new_email_exists = bool(self.find_email(new_email))
+        if new_email_exists:
+            raise KeyError(f"Email {new_email} already exists")
+
+        for e in self.emails:
+            if e.value == email.value:
+                e.update(new_email.value)
+
+                return
+
+        raise ValueError(f"Email {email} not found")
 
 
     def add_address(self, address:Address):

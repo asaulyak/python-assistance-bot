@@ -19,7 +19,7 @@ class AddressBook(UserDict):
 
 
     def find_by_phone(self, phone) -> list[Record]:
-        return [record for record in self.data.values() if record.find_phone(phone.value)]
+        return [record for record in self.data.values() if record.find_phone(phone)]
 
 
     def find_by_email(self, email) -> list[Record]:
@@ -76,8 +76,8 @@ class AddressBook(UserDict):
     def __str__(self):
         if self.is_empty():
             return 'Addressbook is empty'
-        return f'Addressbook:\n {'\n '.join(str(record) for record in self.data.values())}'
+        return f'Addressbook:\n {'\n '.join(str(record) for record in sorted(self.data.values(), key=lambda v: str(v.name)))}'
     
     def table_data(self):
-        return [(record.name.value, '\n'.join(email.value for email in record.emails), '\n'.join(str(phone) for phone in record.phones), str(record.birthday) if record.birthday else '', str(record.address) if record.address else '') for record in self.data.values()]
+        return [(record.name.value, '\n'.join(email.value for email in record.emails), '\n'.join(str(phone) for phone in record.phones), str(record.birthday) if record.birthday else '', str(record.address) if record.address else '') for record in sorted(self.data.values(), key=lambda v: v.name.value.lower())]
      
