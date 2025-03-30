@@ -3,22 +3,16 @@ in the notebook either by their title or by a specific tag.
 Results are displayed in a stylized format using the StylistElements utility.
 """
 
-from typing import Tuple, List
+from typing import List
 
 from command.command import Command
 from execution_context import ExecutionContext
 from notes import Title, Tag, Note
-from user_input import index_question
-from display import StylizedElements, ColorsConstants
+from display import StylizedElements, ColorsConstants, TableBuilder
 
 
 class NoteFineCommand(Command):
-    """A command class that enables searching notes by either title or tag.
-
-    Attributes:
-        name (str): Command name used for invocation.
-        aliases (List[str]): Short aliases for the command.
-        description (str): Description of what the command does."""
+    """A command class that enables searching notes by either title or tag."""
 
     @property
     def name(self):
@@ -34,19 +28,15 @@ class NoteFineCommand(Command):
 
     def run(self, _, context: ExecutionContext, __) -> bool:
         options = [Title.__name__, Tag.__name__]
+        stop = False
 
-        for i, option in enumerate(options):
-            print(f"[{i}] {option}")
-
-        index = index_question("Select field to search: ", len(options) - 1)
-
-        if index is None:
-            StylizedElements.stylized_print("Exiting..", ColorsConstants.ERROR_COLOR.value)
-            return False
+        user_answer = StylizedElements.console_menu("Select a field to search", options)
+        index = options.index(user_answer)
 
         field_name = options[index]
-
-        term = input(f"Type {field_name}: ")
+        term = StylizedElements.stylized_input(
+            f"Type {field_name}: ", ColorsConstants.INPUT_COLOR.value
+        )
 
         notes: List[Note] = []
 
@@ -55,15 +45,28 @@ class NoteFineCommand(Command):
         elif index == 1:
             notes = context.notebook.find_by_tag(term)
 
-        message = "Nothing found"
-
-        if len(notes) > 0:
-            message = "\n".join(
-                [f"{str(note.title)}: {str(note.text)}" for note in notes]
+        if not notes:
+            StylizedElements.stylized_print(
+                "Nothing found", ColorsConstants.WARNING_COLOR.value
             )
+            return stop
 
-        StylizedElements.stylized_print(
-            message, style=ColorsConstants.HEADER_COLOR.value
-        )
+        table_title = "Matching Notes"
+        table_headers = ("Title", "Text", "Tags")
+        table_data = [
+            (
+                note.title.value,
+                note.text.value if note.text else "",
+                ", ".join(tag.value for tag in note.tags),
+            )
+            for note in notes
+        ]
 
-        return False
+        table = TableBuilder()
+        table.set_title(table_title)
+        table.set_table_headers(table_headers)
+        table.set_table_data(table_data)
+        table.set_highlight_text(term)
+        table.show()
+
+        return stop

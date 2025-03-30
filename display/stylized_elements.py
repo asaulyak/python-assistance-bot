@@ -23,7 +23,7 @@ class StylizedElements:
     def fancy_text(cls, text:str)->None:
         """Prints a given text string in a stylized format using pyfiglet library"""
         text = Text(pyfiglet.figlet_format(text))
-        text.stylize(ColorsConstants.HEADER_COLOR.value)
+        text.stylize(ColorsConstants.MAIN_COLOR.value)
         cls.console.print(text)
 
     @classmethod

@@ -36,7 +36,7 @@ class RemoveCommand(Command):
                 return False
 
         else:
-            contacts = list(context.addressbook.values())
+            contacts = context.addressbook.to_list()
             paginator = Paginator(contacts)
 
             index = paginator.show(text='Select a contact to remove')
@@ -57,7 +57,7 @@ class RemoveCommand(Command):
         message.append(f"Name ", ColorsConstants.INPUT_COLOR.value)
         message.append(record_text, ColorsConstants.HIGHLIGHT_COLOR.value)
 
-        StylizedElements.stylized_print(message)
+        StylizedElements.stylized_print(str(message))
 
         return False
 

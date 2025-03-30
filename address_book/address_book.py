@@ -36,6 +36,10 @@ class AddressBook(UserDict):
         return len(self.data) == 0
 
 
+    def to_list(self):
+        return sorted(self.data.values(), key=lambda v: str(v.name))
+
+
     def get_upcoming_birthdays(self, days_to_birthday: int = 7):
         if days_to_birthday < 0:
             raise ValueError('Provide positive number of days to teh birthday')
@@ -76,8 +80,8 @@ class AddressBook(UserDict):
     def __str__(self):
         if self.is_empty():
             return 'Addressbook is empty'
-        return f'Addressbook:\n {'\n '.join(str(record) for record in sorted(self.data.values(), key=lambda v: str(v.name)))}'
+        return f'Addressbook:\n {'\n '.join(str(record) for record in self.to_list())}'
     
     def table_data(self):
-        return [(record.name.value, '\n'.join(email.value for email in record.emails), '\n'.join(str(phone) for phone in record.phones), str(record.birthday) if record.birthday else '', str(record.address) if record.address else '') for record in sorted(self.data.values(), key=lambda v: v.name.value.lower())]
+        return [(record.name.value, '\n'.join(email.value for email in record.emails), '\n'.join(str(phone) for phone in record.phones), str(record.birthday) if record.birthday else '', str(record.address) if record.address else '') for record in self.to_list()]
      

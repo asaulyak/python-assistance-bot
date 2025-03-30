@@ -36,7 +36,6 @@ class AddCommand(Command):
         birthday = None if args_len < 4 else init_field(Birthday, args[3])
         address = None
 
-        # reset the name to None if user doesn't want to edit existing record
         name = self.__check_name_existence(context.addressbook, name) if name else None
         
 
@@ -92,16 +91,7 @@ class AddCommand(Command):
         existing_record = book.find(name)
 
         if existing_record:
-            text = Text()
-            text.append('Name already exists in the address book. ',ColorsConstants.HIGHLIGHT_COLOR.value)
-            text.append('Do you want to edit the record?',ColorsConstants.INPUT_COLOR.value)
-            should_edit = yes_no_question(text)
-
-            if should_edit:
-                StylizedElements.stylized_print('OK. Let\'s update the record', ColorsConstants.SUCCESS_COLOR.value)                
-
-                return name
-            else:
-                return None
+            StylizedElements.stylized_print('Name already exists in the address book. Provide a new one', ColorsConstants.ERROR_COLOR.value)
+            return None
 
         return name
