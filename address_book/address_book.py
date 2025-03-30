@@ -76,5 +76,5 @@ class AddressBook(UserDict):
         return f'Addressbook:\n {'\n '.join(str(record) for record in self.data.values())}'
     
     def table_data(self):
-        return [(record.name.value, '\n'.join(email.value for email in record.emails), '\n'.join(str(phone) for phone in record.phones), str(record.birthday), str(record.address)) for record in self.data.values()]
+        return [(record.name.value, '\n'.join(email.value for email in record.emails), '\n'.join(str(phone) for phone in record.phones), str(record.birthday) if record.birthday else '', str(record.address) if record.address else '') for record in self.data.values()]
      

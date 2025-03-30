@@ -59,7 +59,7 @@ class Record:
 
 
     def __str__(self):
-        birthday = f', Birthday: {str(self.birthday)},' if self.birthday else ''
+        birthday = f', Birthday: {str(self.birthday)}' if self.birthday else ''
         phones = f', Phones: {'; '.join(str(p) for p in self.phones)}' if self.phones else ''
         emails = f', Emails: {'; '.join(email.value for email in self.emails)}' if self.emails else ''
         address = f', Address: {self.address.value}' if self.address else ''
