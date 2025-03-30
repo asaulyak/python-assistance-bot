@@ -48,8 +48,10 @@ class EditCommand(Command):
         if name and not record:
             StylizedElements.stylized_print('Name not found in the address book', ColorsConstants.WARNING_COLOR.value)
 
+        contacts = context.addressbook.to_list()
+
         if not record:
-            paginator = Paginator(list(context.addressbook.values()))
+            paginator = Paginator(contacts)
 
             index = paginator.show(text='Pick an existing contact to edit') 
 
@@ -57,7 +59,7 @@ class EditCommand(Command):
                 StylizedElements.stylized_print('Editing canceled', ColorsConstants.ERROR_COLOR.value)
                 return False
 
-            record = list(context.addressbook.values())[index]
+            record = contacts[index]
 
         print(record)
 
