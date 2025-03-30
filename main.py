@@ -3,6 +3,7 @@ from command.command_runner import CommandRunner
 from user_input import yes_no_question,autocomplete_text
 from display import StylizedElements, ColorsConstants, matrix_rain
 from rich.text import Text
+import time
 
 
 def parse_command(user_input):
