@@ -75,10 +75,10 @@ class AddCommand(Command):
        
         is_present = context.addressbook.find(name)
         message = Text()
-        record_text = str(record).split(' ')
+        record_text = record.name.value
         message.append(f"Contact successfully {"updated" if is_present else "added"}: ", ColorsConstants.SUCCESS_COLOR.value)
-        message.append(f"{record_text[0]} ", ColorsConstants.INPUT_COLOR.value)
-        message.append(record_text[1], ColorsConstants.HIGHLIGHT_COLOR.value)
+        message.append("Name ", ColorsConstants.INPUT_COLOR.value)
+        message.append(record_text, ColorsConstants.HIGHLIGHT_COLOR.value)
 
         StylizedElements.stylized_print(message)
 
