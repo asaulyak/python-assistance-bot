@@ -6,6 +6,7 @@ Results are displayed in a stylized format using the StylistElements utility.
 from typing import List
 
 from command.command import Command
+from display.paginator import Paginator
 from execution_context import ExecutionContext
 from notes import Title, Tag, Note
 from display import StylizedElements, ColorsConstants, TableBuilder
@@ -30,19 +31,23 @@ class NoteFineCommand(Command):
         options = [Title.__name__, Tag.__name__]
         stop = False
 
-        user_answer = StylizedElements.console_menu("Select a field to search", options)
-        index = options.index(user_answer)
+        paginator = Paginator(options)
+        option_index = paginator.show('Select a field to search')
 
-        field_name = options[index]
+        if option_index is None:
+            return False
+
+
+        field_name = options[option_index]
         term = StylizedElements.stylized_input(
             f"Type {field_name}: ", ColorsConstants.INPUT_COLOR.value
         )
 
         notes: List[Note] = []
 
-        if index == 0:
+        if option_index == 0:
             notes = context.notebook.find(term)
-        elif index == 1:
+        elif option_index == 1:
             notes = context.notebook.find_by_tag(term)
 
         if not notes:
