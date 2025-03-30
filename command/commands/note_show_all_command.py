@@ -36,7 +36,7 @@ class NoteShowAllCommand(Command):
 
         table_title = "Notes 📝"
         table_headers = ("Title", "Text", "Tags")
-        table_data = [note.table_data() for note in context.notebook]
+        table_data = [note.table_data() for note in context.notebook.to_list()]
 
         table = TableBuilder()
         table.set_title(table_title)
