@@ -1,3 +1,10 @@
+"""This module defines the AddTagNoteCommand class, a CLI command that enables users to add tags
+to existing notes stored in the notebook.
+
+The command presents an interactive menu for selecting a note and prompts the user to input
+a tag, which is then validated and associated with the selected note. It leverages rich
+console output and stylized elements for a user-friendly interface."""
+
 from command.command import Command
 from display import ColorsConstants, StylizedElements
 from execution_context import ExecutionContext
@@ -6,6 +13,12 @@ from notes import Tag, Note
 
 
 class AddTagNoteCommand(Command):
+    """A command to add a tag to an existing note in the user's notebook.
+
+    This command uses a stylized console menu to allow the user to select
+    a note by title. Once a note is selected, the user is prompted to enter
+    a tag. The tag is validated and then attached to the selected note."""
+
     @property
     def name(self):
         return "add-tag-note"
@@ -19,37 +32,6 @@ class AddTagNoteCommand(Command):
         return "Add tag to a note"
 
     def run(self, _, context: ExecutionContext, __) -> bool:
-        # paginator = Paginator(context.notebook)
-
-        # paginator.show()
-
-        # index = index_question(
-        #     "Type an index of a note to edit (or 'q' to cancel): ",
-        #     max_index=len(context.notebook) - 1,
-        # )
-
-        # if index is None:
-        #     StylizedElements.stylized_print(
-        #         "No tags added", ColorsConstants.ERROR_COLOR.value
-        #     )
-
-        #     return False
-
-        # while True:
-        #     tag = init_field(Tag, input("Provide a tag: "))
-
-        #     if tag and not tag.is_empty():
-        #         break
-
-        # note = context.notebook[index]
-
-        # note.add_tag(tag)
-
-        # message = f"Added tag to note: {note}"
-
-        # StylizedElements.stylized_print(message)
-
-        # return False
         stop = False
         notebook = context.notebook
 
