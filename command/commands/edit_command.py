@@ -103,10 +103,10 @@ class EditCommand(Command):
         context.addressbook.add_record(record)
 
         message = Text()
-        record_text = str(record).split(' ')
+        record_text = record.name.value
         message.append(f"Contact updated: ", ColorsConstants.SUCCESS_COLOR.value)
-        message.append(f"{record_text[0]} ", ColorsConstants.INPUT_COLOR.value)
-        message.append(record_text[1], ColorsConstants.HIGHLIGHT_COLOR.value)
+        message.append(f"Name ", ColorsConstants.INPUT_COLOR.value)
+        message.append(record_text, ColorsConstants.HIGHLIGHT_COLOR.value)
 
         StylizedElements.stylized_print(f"Contact updated: {record}", ColorsConstants.SUCCESS_COLOR.value)
 

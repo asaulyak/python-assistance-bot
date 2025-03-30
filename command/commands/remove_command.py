@@ -52,10 +52,10 @@ class RemoveCommand(Command):
         context.addressbook.delete(record.name)
 
         message = Text()
-        record_text = str(record).split(' ')
+        record_text = record.name.value
         message.append('Contact successfully removed: ', ColorsConstants.SUCCESS_COLOR.value)
-        message.append(f"{record_text[0]} ", ColorsConstants.INPUT_COLOR.value)
-        message.append(record_text[1], ColorsConstants.HIGHLIGHT_COLOR.value)
+        message.append(f"Name ", ColorsConstants.INPUT_COLOR.value)
+        message.append(record_text, ColorsConstants.HIGHLIGHT_COLOR.value)
 
         StylizedElements.stylized_print(message)
 
