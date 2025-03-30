@@ -55,6 +55,10 @@ class Notebook(UserList):
             bool: True if the notebook is empty, False otherwise."""
         return len(self.data) == 0
 
+
+    def to_list(self):
+        return sorted(self.data, key=lambda n: n.title.value.lower())
+
     def __str__(self):
         """Return a stylized string representation of the notebook.
 

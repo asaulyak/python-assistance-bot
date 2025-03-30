@@ -7,6 +7,7 @@ console output and stylized elements for a user-friendly interface."""
 
 from command.command import Command
 from display import ColorsConstants, StylizedElements
+from display.paginator import Paginator
 from execution_context import ExecutionContext
 from field import init_field
 from notes import Tag, Note
@@ -42,20 +43,15 @@ class AddTagNoteCommand(Command):
             )
             return stop
 
-        note_options = [
-            f"{i + 1}. {note.get_title().value}" for i, note in enumerate(notebook)
-        ]
-        note_options.append("Cancel")
+        notes = notebook.to_list()
 
-        selected = StylizedElements.console_menu(
-            "Select a note to add a tag:", note_options
-        )
+        paginator = Paginator(notes)
+        note_index = paginator.show('Select a note to add a tag: ')
 
-        if selected == "Cancel":
+        if note_index is None:
             return stop
 
-        selected_index = note_options.index(selected)
-        note: Note = notebook[selected_index]
+        note: Note = notebook[note_index]
 
         # Prompt for tag
         while True:
