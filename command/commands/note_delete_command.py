@@ -1,3 +1,11 @@
+"""This module defines the NoteDeleteCommand, a CLI command that allows
+users to delete a note from the notebook interactively.
+
+The user is presented with a list of all existing note titles via a
+console menu. Upon selecting a note (or canceling the operation), the
+selected note is deleted from the notebook and a confirmation message
+is displayed."""
+
 from command.command import Command
 from notes import Notebook
 from display import StylizedElements, ColorsConstants
@@ -5,6 +13,12 @@ from execution_context import ExecutionContext
 
 
 class NoteDeleteCommand(Command):
+    """A command that allows users to delete an existing note from the notebook.
+
+    This command displays a stylized interactive menu listing all notes by title,
+    allowing the user to select one for deletion. If the user selects 'Cancel',
+    the operation is aborted. If no notes exist, a warning is displayed."""
+
     @property
     def name(self):
         return "delete-note"
