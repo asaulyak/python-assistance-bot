@@ -46,7 +46,7 @@ class AddTagNoteCommand(Command):
         notes = notebook.to_list()
 
         paginator = Paginator(notes)
-        note_index = paginator.show('Select a note to add a tag: ')
+        note_index = paginator.show('Select a note to add a tag')
 
         if note_index is None:
             return stop
