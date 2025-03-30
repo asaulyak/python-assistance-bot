@@ -38,7 +38,7 @@ class AddCommand(Command):
 
         # reset the name to None if user doesn't want to edit existing record
         name = self.__check_name_existence(context.addressbook, name) if name else None
-        user_name = name
+        
 
         while not name or name.is_empty():
             name = init_field(Name, StylizedElements.stylized_input('Name: ', ColorsConstants.INPUT_COLOR.value))
@@ -72,10 +72,11 @@ class AddCommand(Command):
         if address and not address.is_empty():
             record.add_address(address)
 
-        
+       
+        is_present = context.addressbook.find(name)
         message = Text()
         record_text = str(record).split(' ')
-        message.append(f"Contact successfully {"added" if user_name else "updated"}: ", ColorsConstants.SUCCESS_COLOR.value)
+        message.append(f"Contact successfully {"updated" if is_present else "added"}: ", ColorsConstants.SUCCESS_COLOR.value)
         message.append(f"{record_text[0]} ", ColorsConstants.INPUT_COLOR.value)
         message.append(record_text[1], ColorsConstants.HIGHLIGHT_COLOR.value)
 

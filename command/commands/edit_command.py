@@ -12,6 +12,7 @@ from execution_context import ExecutionContext
 from field import init_field
 from prompt_toolkit import prompt
 from prompt_toolkit.styles import Style
+from rich.text import Text
 
 
 class EditCommand(Command):
@@ -80,11 +81,11 @@ class EditCommand(Command):
             email = init_field(Email, new_email)
 
         while not birthday:
-            new_birthday = prompt('Birthday: ', default=str(record.birthday), style=style)
+            new_birthday = prompt('Birthday: ', default= str(record.birthday) if record.birthday else '', style=style)
             birthday = init_field(Birthday, new_birthday)
 
         while not address:
-            new_address = prompt('Address: ', default=str(record.address), style=style)
+            new_address = prompt('Address: ', default= str(record.address) if record.address else '', style=style)
             address = init_field(Address, new_address)
 
         if phone and not phone.is_empty():
@@ -100,6 +101,12 @@ class EditCommand(Command):
             record.add_address(address)
 
         context.addressbook.add_record(record)
+
+        message = Text()
+        record_text = str(record).split(' ')
+        message.append(f"Contact updated: ", ColorsConstants.SUCCESS_COLOR.value)
+        message.append(f"{record_text[0]} ", ColorsConstants.INPUT_COLOR.value)
+        message.append(record_text[1], ColorsConstants.HIGHLIGHT_COLOR.value)
 
         StylizedElements.stylized_print(f"Contact updated: {record}", ColorsConstants.SUCCESS_COLOR.value)
 
