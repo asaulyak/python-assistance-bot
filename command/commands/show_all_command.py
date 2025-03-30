@@ -22,7 +22,7 @@ class ShowAllCommand(Command):
     def run(self, args: list[str], context: ExecutionContext, commands: List) -> bool:
 
         if context.addressbook.is_empty():
-            StylizedElements.stylized_input('Address book is empty',ColorsConstants.WARNING_COLOR.value)
+            StylizedElements.stylized_print('Address book is empty',ColorsConstants.WARNING_COLOR.value)
             return False
         
         table_title = 'Address book'

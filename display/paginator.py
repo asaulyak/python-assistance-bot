@@ -42,7 +42,7 @@ class Paginator:
             default_opt = [prev_text if start > 0 else None, next_text if end < len(self.items) \
                             else None, exit_text]
 
-            options =[f"{self.items.index(opt) + 1}. {opt.name.value}"  for opt in self.items[start:end]]\
+            options =[f"{self.items.index(opt) + 1}. {str(opt)}"  for opt in self.items[start:end]]\
                     +   [option for option in default_opt if option] # +1 for index because index starts from 0 and in menu index starts from 1
 
             user_choice = StylizedElements.console_menu(text, options)

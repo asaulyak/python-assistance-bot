@@ -19,11 +19,14 @@ class AddressBook(UserDict):
 
 
     def find_by_phone(self, phone) -> list[Record]:
-        return [record for record in self.data.values() if record.find_phone(phone.value)]
+        return [record for record in self.data.values() if record.find_phone(phone)]
 
 
     def find_by_email(self, email) -> list[Record]:
         return [record for record in self.data.values() if record.find_email(email.value)]
+    
+    def find_by_query(self, query) -> list[Record]:
+        return [record for record in self.data.values() if any(query in data for data in record.table_data())]
 
     def delete(self, name):
         del self.data[name.value]
@@ -31,6 +34,10 @@ class AddressBook(UserDict):
 
     def is_empty(self):
         return len(self.data) == 0
+
+
+    def to_list(self):
+        return sorted(self.data.values(), key=lambda v: str(v.name))
 
 
     def get_upcoming_birthdays(self, days_to_birthday: int = 7):
@@ -73,8 +80,8 @@ class AddressBook(UserDict):
     def __str__(self):
         if self.is_empty():
             return 'Addressbook is empty'
-        return f'Addressbook:\n {'\n '.join(str(record) for record in self.data.values())}'
+        return f'Addressbook:\n {'\n '.join(str(record) for record in self.to_list())}'
     
     def table_data(self):
-        return [(record.name.value, '\n'.join(email.value for email in record.emails), '\n'.join(str(phone) for phone in record.phones), str(record.birthday) if record.birthday else '', str(record.address) if record.address else '') for record in self.data.values()]
+        return [(record.name.value, '\n'.join(email.value for email in record.emails), '\n'.join(str(phone) for phone in record.phones), str(record.birthday) if record.birthday else '', str(record.address) if record.address else '') for record in self.to_list()]
      
