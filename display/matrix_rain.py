@@ -2,7 +2,7 @@ import os
 import subprocess
 import platform
 import time
-from pynput import keyboard
+# from pynput import keyboard
 from typing import Optional
 
 def matrix_rain(delay: Optional[int] = 5):
@@ -19,28 +19,12 @@ def matrix_rain(delay: Optional[int] = 5):
     process = subprocess.Popen(["pymatrix-rain"])
 
     start_time = time.time()  # Record start time
-    stop_flag = False  # Flag to track 'q' key press
+# Flag to track 'q' key press
 
     # Define the keyboard listener function
-    def on_press(key):
-        nonlocal stop_flag
-        try:
-            if key.char == 'q':  # Stop if 'q' is pressed
-                stop_flag = True
-                return False  # Stop listener
-        except AttributeError:
-            pass  # Ignore special keys
-
-    # Start keyboard listener
-    listener = keyboard.Listener(on_press=on_press)
-    listener.start()
-
     try:
         while True:
-            # Stop if 'q' was pressed
-            if stop_flag:
-                break
-
+   
             # Stop if delay time has passed
             if time.time() - start_time >= delay:
                 break
@@ -49,7 +33,9 @@ def matrix_rain(delay: Optional[int] = 5):
 
     finally:
         # Terminate the pymatrix-rain process
+        process.terminate()
         process.kill()
-        listener.stop() 
+        os.system(CLEAR)
+
 
 
