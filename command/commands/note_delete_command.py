@@ -33,6 +33,7 @@ class NoteDeleteCommand(Command):
 
     def run(self, _, context: ExecutionContext, __) -> bool:
         notebook: Notebook = context.notebook
+        stop = False
 
         if notebook.is_empty():
             StylizedElements.stylized_print(
@@ -40,7 +41,7 @@ class NoteDeleteCommand(Command):
                 ColorsConstants.HIGHLIGHT_COLOR.value,
             )
 
-            return False
+            return stop
 
         options = [
             f"{i + 1}. {note.get_title().value}" for i, note in enumerate(notebook)
@@ -50,7 +51,7 @@ class NoteDeleteCommand(Command):
         selected = StylizedElements.console_menu("Select a note to edit:", options)
 
         if selected == "Cancel":
-            return False
+            return stop
 
         selected_index = options.index(selected)
         note_to_remove = notebook[selected_index]
@@ -61,4 +62,4 @@ class NoteDeleteCommand(Command):
             style=ColorsConstants.SUCCESS_COLOR.value,
         )
 
-        return False
+        return stop
