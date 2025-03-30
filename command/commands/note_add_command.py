@@ -1,3 +1,7 @@
+"""This module defines the NoteFindCommand class, which allows users to search for notes
+in the notebook either by their title or by a specific tag.
+Results are displayed in a stylized format using the StylistElements utility."""
+
 from typing import List
 
 from command.command import Command
@@ -8,6 +12,13 @@ from notes import Title, Text, Note
 
 
 class NoteAddCommand(Command):
+    """A command that allows users to add a new note to the notebook.
+
+    This command interactively prompts the user to enter a title and text for the note.
+    It validates that both fields are non-empty before creating the Note instance.
+    Once created, the note is added to the notebook within the current execution context.
+    """
+
     @property
     def name(self):
         return "add-note"
