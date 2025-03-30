@@ -1,5 +1,5 @@
 from command.command import Command
-from display import StylizedElements
+from display import StylizedElements,ColorsConstants
 
 
 class HelloCommand(Command):
@@ -19,7 +19,7 @@ class HelloCommand(Command):
 
 
     def run(self, *args):
-        StylizedElements.stylized_print("How can I help you?")
+        StylizedElements.stylized_print("How can I help you?",ColorsConstants.INPUT_COLOR.value)
         stop = False
 
         return stop

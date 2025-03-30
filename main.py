@@ -1,7 +1,7 @@
 from persistence import load_data
 from command.command_runner import CommandRunner
 from user_input import yes_no_question,autocompelete_text
-from display import StylizedElements, ColorsConstants
+from display import StylizedElements, ColorsConstants, matrix_rain
 from rich.text import Text
 
 
@@ -17,7 +17,7 @@ def parse_command(user_input):
 
 def main():
     context = load_data()
-
+    matrix_rain()
     StylizedElements.fancy_text("Welcome to the assistant bot!")
     command_parser = CommandRunner()
 
