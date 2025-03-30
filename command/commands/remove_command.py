@@ -6,6 +6,7 @@ from display import ColorsConstants, StylizedElements
 from display.paginator import Paginator
 from execution_context import ExecutionContext
 from user_input import index_question
+from rich.text import Text
 
 class RemoveCommand(Command):
     @property
@@ -39,9 +40,7 @@ class RemoveCommand(Command):
             contacts = list(context.addressbook.values())
             paginator = Paginator(contacts)
 
-            paginator.show()
-
-            index = index_question('Select a contact to remove (or \'q\' to cancel): ', len(context.addressbook) - 1)
+            index = paginator.show(text='Select a contact to remove')
 
             if index is None:
                 # user interrupted contact removal
@@ -53,7 +52,11 @@ class RemoveCommand(Command):
 
         context.addressbook.delete(record.name)
 
-        message = f'Contact successfully removed: {record}'
+        message = Text()
+        record_text = str(record).split(' ')
+        message.append('Contact successfully removed: ', ColorsConstants.SUCCESS_COLOR.value)
+        message.append(f"{record_text[0]} ", ColorsConstants.INPUT_COLOR.value)
+        message.append(record_text[1], ColorsConstants.HIGHLIGHT_COLOR.value)
 
         StylizedElements.stylized_print(message)
 

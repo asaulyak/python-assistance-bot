@@ -31,7 +31,7 @@ class Paginator:
     def show(self, text:str='',max_records = 5,):
         '''
         Method for pagination
-        '''      
+        '''
         prev_text = '⬅️  Prev'
         next_text = 'Next ➡️'
         exit_text = '↩️  Exit'
@@ -55,5 +55,4 @@ class Paginator:
                 case text if text ==exit_text:
                     return None
                 case _:
-                    
                     return int(user_choice.split(".")[0]) - 1 # -1 for index because index starts from 0
