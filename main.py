@@ -3,6 +3,7 @@ from command.command_runner import CommandRunner
 from user_input import yes_no_question,autocomplete_text
 from display import StylizedElements, ColorsConstants, matrix_rain
 from rich.text import Text
+import time
 
 
 def parse_command(user_input):
@@ -17,8 +18,11 @@ def parse_command(user_input):
 
 def main():
     context = load_data()
-    # matrix_rain()
+    matrix_rain()
+    # print("asdfasfdasdfasdf")
+    
     StylizedElements.fancy_text("Follow the white rabbit")
+    # print("asdfasfdasdfasdf")
     command_parser = CommandRunner()
 
     while True:

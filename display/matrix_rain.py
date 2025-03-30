@@ -16,7 +16,8 @@ def matrix_rain(delay: Optional[int] = 5):
     os.system(CLEAR)
 
     # Start the pymatrix-rain process
-    process = subprocess.Popen(["pymatrix-rain"])
+    # process = subprocess.Popen(["pymatrix-rain"])
+    process = subprocess.Popen(["cmatrix"])
 
     start_time = time.time()  # Record start time
 # Flag to track 'q' key press
@@ -35,7 +36,8 @@ def matrix_rain(delay: Optional[int] = 5):
         # Terminate the pymatrix-rain process
         process.terminate()
         process.kill()
-        os.system(CLEAR)
+        # os.system(CLEAR)
+        os.system("reset")
 
 
 
