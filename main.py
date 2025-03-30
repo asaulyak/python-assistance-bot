@@ -1,6 +1,6 @@
 from persistence import load_data
 from command.command_runner import CommandRunner
-from user_input import yes_no_question,autocompelete_text
+from user_input import yes_no_question,autocomplete_text
 from display import StylizedElements, ColorsConstants, matrix_rain
 from rich.text import Text
 
@@ -24,7 +24,7 @@ def main():
     while True:
         
         main_commands = {key:value for key,value in command_parser.commands.items() if key not in  value.aliases}.keys()
-        fix_typo = autocompelete_text(main_commands)
+        fix_typo = autocomplete_text(main_commands)
 
         cmd, *args = parse_command(fix_typo)
 
