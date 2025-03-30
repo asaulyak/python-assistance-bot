@@ -9,6 +9,7 @@ from field import init_field
 from user_input import yes_no_question
 from display import StylizedElements, ColorsConstants
 from rich.text import Text
+from display.text_animation import MatrixTextLoader
 
 
 class AddCommand(Command):
@@ -40,7 +41,7 @@ class AddCommand(Command):
         
 
         while not name or name.is_empty():
-            name = init_field(Name, StylizedElements.stylized_input('Name: ', ColorsConstants.INPUT_COLOR.value))
+            name = init_field(Name, StylizedElements.stylized_input(MatrixTextLoader('Name: '), ColorsConstants.INPUT_COLOR.value))
             name = self.__check_name_existence(context.addressbook, name) if name else None
 
         while not phone:
