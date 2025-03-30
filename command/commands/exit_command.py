@@ -13,7 +13,7 @@ class ExitCommand(Command):
 
     @property
     def aliases(self):
-        return ['close']
+        return ['close', "quit"]
 
 
     @property

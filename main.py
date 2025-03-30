@@ -19,10 +19,7 @@ def parse_command(user_input):
 def main():
     context = load_data()
     matrix_rain()
-    # print("asdfasfdasdfasdf")
-    
     StylizedElements.fancy_text("Follow the white rabbit")
-    # print("asdfasfdasdfasdf")
     command_parser = CommandRunner()
 
     while True:

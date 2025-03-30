@@ -10,7 +10,7 @@ class HelpCommand(Command):
 
     @property
     def aliases(self):
-        return ['?', 'h', 'menu']
+        return ['?', 'h', 'menu', "what", "list"]
 
     @property
     def description(self):
