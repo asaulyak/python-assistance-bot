@@ -1,3 +1,5 @@
+import re
+
 from typing import List
 
 from address_book import Name, Phone, Address
@@ -8,10 +10,14 @@ from display import StylizedElements, ColorsConstants
 from display.paginator import Paginator
 from execution_context import ExecutionContext
 from field import init_field
-from user_input import index_question
+from prompt_toolkit import prompt
+from prompt_toolkit.styles import Style
 
 
 class EditCommand(Command):
+    '''
+    Edit a record in the address book.
+    '''
 
     @property
     def name(self):
@@ -28,6 +34,11 @@ class EditCommand(Command):
         return 'Update a record in the address book'
 
     def run(self, args: list[str], context: ExecutionContext, commands: List) -> bool:
+        
+        if len(context.addressbook.items()) == 0:
+            StylizedElements.stylized_print('Address book is empty', ColorsConstants.WARNING_COLOR.value)
+            return False
+
         args_len = len(args)
 
         name = args[0] if args_len >= 1 else None
@@ -35,22 +46,19 @@ class EditCommand(Command):
         record = context.addressbook.find(Name(name)) if name else None
 
         if name and not record:
-            print('Name not found in the address book')
+            StylizedElements.stylized_print('Name not found in the address book', ColorsConstants.WARNING_COLOR.value)
 
         if not record:
-            print('Pick an existing contact to edit')
 
             paginator = Paginator(list(context.addressbook.values()))
-            paginator.show(True)
 
-            while not record:
-                index = index_question('Type an index of a contact to edit (or \'q\' to cancel): ', len(context.addressbook))
+            index = paginator.show(text='Pick an existing contact to edit') 
 
-                if index is None:
-                    StylizedElements.stylized_print('Editing canceled', ColorsConstants.ERROR_COLOR.value)
-                    return False
+            if index is None:
+                StylizedElements.stylized_print('Editing canceled', ColorsConstants.ERROR_COLOR.value)
+                return False
 
-                record = list(context.addressbook.values())[index]
+            record = list(context.addressbook.values())[index]
 
 
         phone = None
@@ -58,17 +66,26 @@ class EditCommand(Command):
         birthday = None
         address= None
 
+        print(str(record))
+
+        style = Style.from_dict({
+            'prompt': ColorsConstants.INPUT_COLOR.value,
+        })
         while not phone:
-            phone = init_field(Phone, input('Phone: '))
+            new_phone = prompt('Phone: ', default=" ".join(re.sub(r"\D", "",str(p)) for p in record.phones), style=style)
+            phone = init_field(Phone, new_phone)
 
         while not email:
-            email = init_field(Email, input('Email: '))
+            new_email = prompt('Email: ', default=" ".join(email.value for email in record.emails), style=style)
+            email = init_field(Email, new_email)
 
         while not birthday:
-            birthday = init_field(Birthday, input('Birthday: '))
+            new_birthday = prompt('Birthday: ', default=str(record.birthday), style=style)
+            birthday = init_field(Birthday, new_birthday)
 
         while not address:
-            address = init_field(Address, input('Address: '))
+            new_address = prompt('Address: ', default=str(record.address), style=style)
+            address = init_field(Address, new_address)
 
         if phone and not phone.is_empty():
             record.add_phone(phone)
