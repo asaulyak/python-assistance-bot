@@ -5,7 +5,6 @@ from command.command import Command
 from display import ColorsConstants, StylizedElements
 from display.paginator import Paginator
 from execution_context import ExecutionContext
-from user_input import index_question
 from rich.text import Text
 
 class RemoveCommand(Command):
@@ -32,7 +31,7 @@ class RemoveCommand(Command):
             record = context.addressbook.find(Name(name))
 
             if not record:
-                StylizedElements.stylized_print('Contact not found', ColorsConstants.ERROR_COLOR._value_)
+                StylizedElements.stylized_print('Contact not found', ColorsConstants.ERROR_COLOR.value)
 
                 return False
 
@@ -44,7 +43,7 @@ class RemoveCommand(Command):
 
             if index is None:
                 # user interrupted contact removal
-                StylizedElements.stylized_print('No records removed', ColorsConstants.ERROR_COLOR._value_)
+                StylizedElements.stylized_print('No records removed', ColorsConstants.ERROR_COLOR.value)
 
                 return  False
 

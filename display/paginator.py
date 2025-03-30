@@ -1,4 +1,3 @@
-from user_input import yes_no_question
 from display import StylizedElements
 
 
@@ -48,11 +47,11 @@ class Paginator:
 
             user_choice = StylizedElements.console_menu(text, options)
             match user_choice:
-                case text if text ==prev_text :
+                case text if text == prev_text :
                     self.__records_cursor = start - max_records
-                case text if text ==next_text:
+                case text if text == next_text:
                     self.__records_cursor = end
-                case text if text ==exit_text:
+                case text if text == exit_text:
                     return None
                 case _:
                     return int(user_choice.split(".")[0]) - 1 # -1 for index because index starts from 0

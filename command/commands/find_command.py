@@ -82,7 +82,7 @@ class FindCommand(Command):
 
         if len(records) > 0:
             table_title = 'Address book'
-            table_headers = ('name', 'emails','phones','birthday')
+            table_headers = ('name', 'emails','phones','birthday', 'address')
             table_data = [record.table_data() for record in records]            
 
             table = TableBuilder()
