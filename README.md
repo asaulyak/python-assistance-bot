@@ -111,19 +111,28 @@ python-assistance-bot/
 
 ## Початок роботи
 
-1. Встановіть залежності проєкту:
+1. Встановіть cmatrix або pymatrix-rain(Windows):
+
+```bash
+sudo apt install cmatrix  # Debian/Ubuntu
+sudo dnf install cmatrix  # Fedora
+brew install cmatrix      # macOS
+pip install pymatrix-rain # Windows
+```
+
+2. Встановіть залежності проєкту:
 
 ```bash
 pip install -r requirements.txt
 ```
 
-2. Запустіть застосунок:
+3. Запустіть застосунок:
 
 ```bash
 python main.py
 ```
 
-3. Використовуйте команду `help`, щоб побачити список доступних команд та їх опис.
+4. Використовуйте команду `help`, щоб побачити список доступних команд та їх опис.
 
 ---
 
