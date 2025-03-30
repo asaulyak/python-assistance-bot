@@ -47,7 +47,8 @@ class Record:
             if p.value == phone.value:
                 to_remove = p
 
-        self.phones.remove(to_remove)
+        if to_remove:
+            self.phones.remove(to_remove)
 
     def add_birthday(self, birthday: Birthday):
         self.birthday = birthday

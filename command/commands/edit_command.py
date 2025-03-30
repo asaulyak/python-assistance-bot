@@ -35,8 +35,7 @@ class EditCommand(Command):
         return 'Update a record in the address book'
 
     def run(self, args: list[str], context: ExecutionContext, commands: List) -> bool:
-        
-        if len(context.addressbook.items()) == 0:
+        if context.addressbook.is_empty():
             StylizedElements.stylized_print('Address book is empty', ColorsConstants.WARNING_COLOR.value)
             return False
 
@@ -50,7 +49,6 @@ class EditCommand(Command):
             StylizedElements.stylized_print('Name not found in the address book', ColorsConstants.WARNING_COLOR.value)
 
         if not record:
-
             paginator = Paginator(list(context.addressbook.values()))
 
             index = paginator.show(text='Pick an existing contact to edit') 
@@ -61,77 +59,37 @@ class EditCommand(Command):
 
             record = list(context.addressbook.values())[index]
 
-
-        phone = None
-        email = None
-        birthday = None
-        address= None
-
-        print(str(record))
+        print(record)
 
         options_paginator = Paginator(['Name', 'Phones', 'Emails', 'Birthday', 'Address'])
 
-        field_index = options_paginator.show('Select a field to update')
+        while True:
+            field_index = options_paginator.show('Select a field to update')
 
-        match field_index:
-            case 0:
-                self.__edit_name(record, context.addressbook)
-            case 1:
-                self.__edit_phones(record)
-            case 2:
-                self.__edit_emails(record)
+            if field_index is None:
+                break
 
-        # while True:
-        #
-        #     options_index = options_paginator.show(text='Select what needs to be edited')
-        #
-        #     self.__edit_phones(record)
-        #
-        #     if options_index is None:
-        #         break
-        #
-        # print('options_index', options_index)
-        #
-        # style = Style.from_dict({
-        #     'prompt': ColorsConstants.INPUT_COLOR.value,
-        # })
-        # while not phone:
-        #     new_phone = prompt('Phone: ', default=" ".join(re.sub(r"\D", "",str(p)) for p in record.phones), style=style)
-        #     phone = init_field(Phone, new_phone)
-        #
-        # while not email:
-        #     new_email = prompt('Email: ', default=" ".join(email.value for email in record.emails), style=style)
-        #     email = init_field(Email, new_email)
-        #
-        # while not birthday:
-        #     new_birthday = prompt('Birthday: ', default= str(record.birthday) if record.birthday else '', style=style)
-        #     birthday = init_field(Birthday, new_birthday)
-        #
-        # while not address:
-        #     new_address = prompt('Address: ', default= str(record.address) if record.address else '', style=style)
-        #     address = init_field(Address, new_address)
-        #
-        # if phone and not phone.is_empty():
-        #     record.add_phone(phone)
-        #
-        # if email and not email.is_empty():
-        #     record.add_email(email)
-        #
-        # if birthday and not birthday.is_empty():
-        #     record.add_birthday(birthday)
-        #
-        # if address and not address.is_empty():
-        #     record.add_address(address)
+            match field_index:
+                case 0:
+                    self.__edit_name(record, context.addressbook)
+                case 1:
+                    self.__edit_phones(record)
+                case 2:
+                    self.__edit_emails(record)
+                case 3:
+                    self.__edit_birthday(record)
+                case 4:
+                    self.__edit_address(record)
 
         context.addressbook.add_record(record)
 
         message = Text()
         record_text = record.name.value
-        message.append(f"Contact updated: ", ColorsConstants.SUCCESS_COLOR.value)
+        message.append(f"Finished updating contact: ", ColorsConstants.SUCCESS_COLOR.value)
         message.append(f"Name ", ColorsConstants.INPUT_COLOR.value)
         message.append(record_text, ColorsConstants.HIGHLIGHT_COLOR.value)
 
-        StylizedElements.stylized_print(f"Contact updated: {record}", ColorsConstants.SUCCESS_COLOR.value)
+        StylizedElements.stylized_print(str(message), ColorsConstants.SUCCESS_COLOR.value)
 
         return False
 
@@ -145,10 +103,7 @@ class EditCommand(Command):
         })
 
         while True:
-            action_index = actions_paginator.show('Select action')
-
-            if action_index is None:
-                break
+            action_index = actions_paginator.show('Select phone edit action')
 
             match action_index:
                 case 0:
@@ -181,7 +136,7 @@ class EditCommand(Command):
                     update_paginator = Paginator(phones_options)
                     update_phone_index = update_paginator.show('Select a phone to update')
 
-                    if update_paginator is None:
+                    if update_phone_index is None:
                         break
 
                     phone_to_update = next(
@@ -197,6 +152,8 @@ class EditCommand(Command):
                             record.edit_phone(phone_to_update, new_phone)
 
                             break
+                case None:
+                    break
 
 
     def __edit_emails(self, record: Record):
@@ -207,7 +164,7 @@ class EditCommand(Command):
         })
 
         while True:
-            action_index = actions_paginator.show('Select action')
+            action_index = actions_paginator.show('Select email edit action')
 
             if action_index is None:
                 break
@@ -243,7 +200,7 @@ class EditCommand(Command):
                     update_paginator = Paginator(email_options)
                     update_email_index = update_paginator.show('Select an email to update')
 
-                    if update_paginator is None:
+                    if update_email_index is None:
                         break
 
                     email_to_update = next(
@@ -262,8 +219,12 @@ class EditCommand(Command):
 
 
     def __edit_name(self, record: Record, book: AddressBook):
+        style = Style.from_dict({
+            'prompt': ColorsConstants.INPUT_COLOR.value,
+        })
+
         while True:
-            input_name = StylizedElements.stylized_input('Type name: ', ColorsConstants.INPUT_COLOR.value)
+            input_name = prompt('Name: ', default=record.name.value, style=style)
             name = init_field(Name, input_name)
 
             if name and not name.is_empty():
@@ -273,7 +234,36 @@ class EditCommand(Command):
 
                 book.delete(record.name)
                 record.set_name(name)
-                book.add_record(record
-                                )
-                StylizedElements.stylized_print('Name updated', ColorsConstants.SUCCESS_COLOR.value)
+                book.add_record(record)
+
+                StylizedElements.stylized_print(f'Name updated: {str(name)}', ColorsConstants.SUCCESS_COLOR.value)
+                break
+
+
+    def __edit_birthday(self, record):
+        style = Style.from_dict({
+            'prompt': ColorsConstants.INPUT_COLOR.value,
+        })
+
+        while True:
+            input_birthday = prompt('Birthday: ', default=record.birthday.value if record.birthday else '', style=style)
+            birthday = init_field(Birthday, input_birthday)
+
+            if birthday and not birthday.is_empty():
+                record.add_birthday(birthday)
+                StylizedElements.stylized_print(f'Birthday updated: {str(birthday)}')
+                break
+
+
+    def __edit_address(self, record):
+        style = Style.from_dict({
+            'prompt': ColorsConstants.INPUT_COLOR.value,
+        })
+        while True:
+            input_address = prompt('Address: ', default=record.address.value if record.address else '', style=style)
+            address = init_field(Address, input_address)
+
+            if address and not address.is_empty():
+                record.add_address(address)
+                StylizedElements.stylized_print(f'Address updated: {str(address)}')
                 break
