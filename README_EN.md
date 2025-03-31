@@ -111,13 +111,22 @@ These modules standardize information display and user interactions.
 
 ## Getting Started
 
-1. Install project dependencies:
+1. Install cmatrix or pymatrix-rain(Windows)::
+
+```bash
+sudo apt install cmatrix  # Debian/Ubuntu
+sudo dnf install cmatrix  # Fedora
+brew install cmatrix      # macOS
+pip install pymatrix-rain # Windows
+```
+
+2. Install project dependencies:
 
 ```bash
 pip install -r requirements.txt
 ```
 
-2. Run the application:
+3. Run the application:
 
 ```bash
 python main.py

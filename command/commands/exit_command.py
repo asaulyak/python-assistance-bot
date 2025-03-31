@@ -1,7 +1,9 @@
+import time
 from command.command import Command
 from execution_context import ExecutionContext
 from persistence import save_data
-from display import StylizedElements
+from display import StylizedElements,matrix_rain
+
 
 
 class ExitCommand(Command):
@@ -12,7 +14,7 @@ class ExitCommand(Command):
 
     @property
     def aliases(self):
-        return ['close']
+        return ['close', "quit"]
 
 
     @property
@@ -24,6 +26,8 @@ class ExitCommand(Command):
     def run(self, _, context: ExecutionContext, *args):
         message = 'Good bye!'
         StylizedElements.fancy_text(message)
+        time.sleep(2)
+        matrix_rain(20)
 
         save_data(context)
 

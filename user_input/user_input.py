@@ -38,7 +38,7 @@ def index_question(question: str, max_index: int, min_index: int = 0, offer_quit
     return index
 
 
-def autocompelete_text(commands:List[str]) -> str:
+def autocomplete_text(commands:List[str]) -> str:
     '''
     Create a completer (auto-suggests commands)
     '''

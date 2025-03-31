@@ -1,8 +1,9 @@
 from persistence import load_data
 from command.command_runner import CommandRunner
-from user_input import yes_no_question,autocompelete_text
-from display import StylizedElements, ColorsConstants
+from user_input import yes_no_question,autocomplete_text
+from display import StylizedElements, ColorsConstants, matrix_rain
 from rich.text import Text
+import time
 
 
 def parse_command(user_input):
@@ -17,14 +18,15 @@ def parse_command(user_input):
 
 def main():
     context = load_data()
-
+    matrix_rain()
+    
     StylizedElements.fancy_text("Follow the white rabbit")
     command_parser = CommandRunner()
 
     while True:
         
         main_commands = {key:value for key,value in command_parser.commands.items() if key not in  value.aliases}.keys()
-        fix_typo = autocompelete_text(main_commands)
+        fix_typo = autocomplete_text(main_commands)
 
         cmd, *args = parse_command(fix_typo)
 
