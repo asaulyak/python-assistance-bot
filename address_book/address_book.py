@@ -26,7 +26,7 @@ class AddressBook(UserDict):
         return [record for record in self.data.values() if record.find_email(email.value)]
     
     def find_by_query(self, query) -> list[Record]:
-        return [record for record in self.data.values() if any(query in data for data in record.table_data())]
+        return [record for record in self.data.values() if any(query.lower() in data.lower() for data in record.table_data())]
 
     def delete(self, name):
         del self.data[name.value]
