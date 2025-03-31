@@ -3,7 +3,6 @@ from command.command_runner import CommandRunner
 from user_input import yes_no_question,autocomplete_text
 from display import StylizedElements, ColorsConstants, matrix_rain
 from rich.text import Text
-import time
 
 
 def parse_command(user_input):
@@ -21,23 +20,24 @@ def main():
     matrix_rain()
     
     StylizedElements.fancy_text("Follow the white rabbit")
-    command_parser = CommandRunner()
+    StylizedElements.stylized_print('Type help (or menu) to see available commands', ColorsConstants.MAIN_COLOR.value)
+    command_runner = CommandRunner()
 
     while True:
         
-        main_commands = {key:value for key,value in command_parser.commands.items() if key not in  value.aliases}.keys()
+        main_commands = {key:value for key,value in command_runner.commands.items() if key not in  value.aliases}.keys()
         fix_typo = autocomplete_text(main_commands)
 
         cmd, *args = parse_command(fix_typo)
 
-        command = command_parser.find_command(cmd)
+        command = command_runner.find_command(cmd)
 
         if not command:
-            match = command_parser.find_suggested_command(cmd)
+            match = command_runner.find_suggested_command(cmd)
 
             if match:
                 # this will return command because a match was found
-                command = command_parser.find_command(match)
+                command = command_runner.find_command(match)
                 # colorized text
                 text = Text()
                 text.append("Did you mean ", style=ColorsConstants.INPUT_COLOR.value)
@@ -54,7 +54,7 @@ def main():
                 continue
 
 
-        commands_set = list(set(command_parser.commands.values()))
+        commands_set = list(set(command_runner.commands.values()))
         stop = command.run(args, context, commands_set)
 
         if stop:
